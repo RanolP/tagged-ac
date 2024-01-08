@@ -1,0 +1,17 @@
+{
+  "name": "tagged-ac",
+  "type": "module",
+  "scripts": {
+    "dev": "vinxi dev",
+    "build": "vinxi build",
+    "start": "vinxi start"
+  },
+  "dependencies": {
+    "@solidjs/start": "^0.4.4",
+    "solid-js": "^1.8.8",
+    "vinxi": "0.1.1"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}
