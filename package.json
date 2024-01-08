@@ -13,5 +13,11 @@
   },
   "engines": {
     "node": ">=18"
+  },
+  "devDependencies": {
+    "unocss": "^0.58.3"
+  },
+  "resolutions": {
+    "vite": "^5.0.11"
   }
 }
