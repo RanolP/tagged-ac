@@ -3,8 +3,6 @@ import UnoCSS from 'unocss/vite'
 
 export default defineConfig({
     plugins: [
-        UnoCSS({
-            mode: 'per-module'
-        }),
+        UnoCSS(),
     ]
 });
