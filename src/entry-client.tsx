@@ -1,4 +1,5 @@
-import { mount, StartClient } from "@solidjs/start/client";
-import 'virtual:uno.css'
+import 'virtual:uno.css';
 
-mount(() => <StartClient />, document.getElementById("app"));
+import { mount, StartClient } from '@solidjs/start/client';
+
+mount(() => <StartClient />, document.getElementById('app'));
