@@ -19,9 +19,7 @@ netlify
 .classpath
 *.launch
 .settings/
-
-# Temp
-gitignore
+.eslintcache
 
 # System Files
 .DS_Store
