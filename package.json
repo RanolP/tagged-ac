@@ -5,7 +5,7 @@
     "dev": "vinxi dev",
     "build": "vinxi build",
     "start": "vinxi start",
-    "lint": "ESLINT_USE_FLAT_CONFIG=true eslint .",
+    "lint": "eslint .",
 
     "prepare": "simple-git-hooks"
   },
