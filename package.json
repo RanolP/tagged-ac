@@ -5,7 +5,7 @@
     "dev": "vinxi dev",
     "build": "vinxi build",
     "start": "vinxi start",
-    "check:lint": "eslint --cached .",
+    "check:lint": "eslint --cache .",
     "check:type": "tsc-silent -p tsconfig.json --suppress @solidjs/start",
     "prepare": "simple-git-hooks"
   },
