@@ -11,7 +11,7 @@
     "strict": true,
     "noEmit": true,
     "skipLibCheck": true,
-    "types": ["vinxi/client", "src/index.d.ts"],
+    "types": ["vinxi/client"],
     "isolatedModules": true,
     "paths": {
       "~/*": ["./src/*"]
