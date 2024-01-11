@@ -8,7 +8,7 @@ import eslintPluginSimpleImportSort from 'eslint-plugin-simple-import-sort';
  */
 export default [
   {
-    files: ['**/*.ts', '**/*.tsx'],
+    files: ['**/*.{ts,tsx}'],
   },
   {
     languageOptions: {
