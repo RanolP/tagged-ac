@@ -1,5 +1,5 @@
 import typescriptEslintParser from '@typescript-eslint/parser';
-import unocss from '@unocss/eslint-config/flat';
+import unocss from '@unocss/eslint-plugin';
 import eslintPluginPrettierRecommended from 'eslint-plugin-prettier/recommended';
 import eslintPluginSimpleImportSort from 'eslint-plugin-simple-import-sort';
 
@@ -15,7 +15,15 @@ export default [
       parser: typescriptEslintParser,
     },
   },
-  unocss,
+  {
+    plugins: {
+      unocss,
+    },
+    rules: {
+      'unocss/order': 'error',
+      'unocss/order-attributify': 'error',
+    },
+  },
   eslintPluginPrettierRecommended,
   {
     rules: {

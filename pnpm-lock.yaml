@@ -7,6 +7,11 @@ settings:
 overrides:
   vite: ^5.0.11
 
+patchedDependencies:
+  '@unocss/eslint-plugin@0.58.3':
+    hash: shsqkmp2c4cavevcmyxe3nadky
+    path: patches/@unocss__eslint-plugin@0.58.3.patch
+
 dependencies:
   '@solidjs/start':
     specifier: ^0.4.5
@@ -43,6 +48,9 @@ devDependencies:
   prettier:
     specifier: ^3.1.1
     version: 3.1.1
+  typescript:
+    specifier: ^5.0.4
+    version: 5.0.4
   unocss:
     specifier: ^0.58.3
     version: 0.58.3(postcss@8.4.33)(vite@5.0.11)
@@ -1653,14 +1661,14 @@ packages:
     resolution: {integrity: sha512-q9yLUiVPhTcAiBwu0xwewz4oxz3mdAxOX0uTU5ygbvJQWdLV5gnKPDS74HKuHqT7L/D+IcyM7QAcnYM1SdINBQ==}
     engines: {node: '>=14'}
     dependencies:
-      '@unocss/eslint-plugin': 0.58.3(eslint@8.56.0)(typescript@5.0.4)
+      '@unocss/eslint-plugin': 0.58.3(patch_hash=shsqkmp2c4cavevcmyxe3nadky)(eslint@8.56.0)(typescript@5.0.4)
     transitivePeerDependencies:
       - eslint
       - supports-color
       - typescript
     dev: true
 
-  /@unocss/eslint-plugin@0.58.3(eslint@8.56.0)(typescript@5.0.4):
+  /@unocss/eslint-plugin@0.58.3(patch_hash=shsqkmp2c4cavevcmyxe3nadky)(eslint@8.56.0)(typescript@5.0.4):
     resolution: {integrity: sha512-5E55Oz13aPpbKblR/DQfjahl/CNChHI97P19Flv2CslS2rNjPwI2c1nV7He3SJdJtnfd88To78ltlz7UOZzOqA==}
     engines: {node: '>=14'}
     dependencies:
@@ -1674,6 +1682,7 @@ packages:
       - supports-color
       - typescript
     dev: true
+    patched: true
 
   /@unocss/extractor-arbitrary-variants@0.58.3:
     resolution: {integrity: sha512-QszC2atLcvzyoZFsjgtMBbILN4lrYI60iVRWdii+GGiKVtoIaKRWiA/3WERkvYGVPseVWOMflUpfxNeq+s9zUw==}

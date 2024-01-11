@@ -1,0 +1,38 @@
+diff --git a/dist/index.mjs b/dist/index.mjs
+index 63cc0833fcd642474fc29a7444c45ff7c280297f..a8c006ea287922822c8423939bf21b1bac57d4a0 100644
+--- a/dist/index.mjs
++++ b/dist/index.mjs
+@@ -35,7 +35,32 @@ const orderAttributify = createRule({
+   },
+   defaultOptions: [],
+   create(context) {
+-    const scriptVisitor = {};
++    const scriptVisitor = {
++      JSXElement(node) {
++        const valueless = node.openingElement.attributes.filter((i) => i.type === 'JSXAttribute' && !IGNORE_ATTRIBUTES.includes(i.name.type === 'JSXIdentifier' ? i.name.name : `${i.name.namespace}:${i.name.name}`) && i.value == null)
++        if (!valueless.length)
++          return
++        const input = valueless.map(i => i.name.type === 'JSXIdentifier' ? i.name.name : `${i.name.namespace}:${i.name.name}`).join(' ').trim()
++        const sorted = syncAction('sort', input)
++        if (sorted !== input) {
++          context.report({
++            node,
++            messageId: 'invalid-order',
++            fix(fixer) {
++              const codeFull = context.sourceCode
++              const offset = node.range[0]
++              const code = codeFull.getText().slice(node.range[0], node.range[1])
++              const s = new MagicString(code)
++              const sortedNodes = valueless.map(i => [i.range[0] - offset, i.range[1] - offset]).sort((a, b) => b[0] - a[0])
++              for (const [start, end] of sortedNodes.slice(1))
++                s.remove(start, end)
++              s.overwrite(sortedNodes[0][0], sortedNodes[0][1], ` ${sorted.trim()}`)
++              return fixer.replaceText(node, s.toString())
++            },
++          })
++        }
++      }
++    };
+     const templateBodyVisitor = {
+       VStartTag(node) {
+         const valueless = node.attributes.filter((i) => typeof i.key?.name === "string" && !IGNORE_ATTRIBUTES.includes(i.key?.name?.toLowerCase()) && i.value == null);

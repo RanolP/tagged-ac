@@ -7,13 +7,13 @@ export default function App() {
   const [count, setCount] = createSignal(0);
 
   return (
-    <main text-center p-4 mx-auto>
+    <main mx-auto p-4 text-center>
       <h1
         text="16 [#335d92] uppercase"
         lh="[1.1]"
-        font-100
         mx-auto
         my-16
+        font-100
         max-w="[14rem] sm:none"
       >
         Hello world!
