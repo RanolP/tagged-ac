@@ -1,3 +1,4 @@
 {
-    "pre-commit": "pnpm exec lint-staged"
+    "pre-commit": "pnpm exec lint-staged",
+    "pre-push": "pnpm check:lint && pnpm check:type"
 }
