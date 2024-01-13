@@ -3,7 +3,6 @@ import UnoCSS from 'unocss/vite';
 
 export default defineConfig({
   start: {
-    solid: undefined as any,
     server: {
       preset: 'cloudflare-pages',
     },
