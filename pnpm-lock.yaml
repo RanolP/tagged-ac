@@ -20,6 +20,9 @@ dependencies:
   '@solidjs/start':
     specifier: ^0.4.5
     version: 0.4.5(solid-js@1.8.10)(vinxi@0.1.1)(vite@5.0.11)
+  '@unocss/reset':
+    specifier: ^0.58.3
+    version: 0.58.3
   solid-js:
     specifier: ^1.8.10
     version: 1.8.10
@@ -1802,7 +1805,6 @@ packages:
 
   /@unocss/reset@0.58.3:
     resolution: {integrity: sha512-Q2KiRQlam2iYsTZgKdvnXEfUN4TA2oVpGIVD9Wa0ggs0XlYj5aOo0g0+4Tgqqn+YaviZQeJKnDs/JWE+ygHhZA==}
-    dev: true
 
   /@unocss/rule-utils@0.58.3:
     resolution: {integrity: sha512-0Px9gIW+VOKetZuYET19uamIRpk7A9c8sCzQuGlNvCLXKEWamqXz5asLtnvPzw6SwCXEQDgWXE9i+aeoXaM0Jg==}
