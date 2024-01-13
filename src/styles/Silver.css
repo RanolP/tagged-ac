@@ -1,4 +1,7 @@
 @font-face {
-    font-family: Silver;
-    src: local() url(/fonts/Silver.woff2);
+  font-family: Silver;
+  src:
+    local(),
+    url(/fonts/Silver.woff2) format('woff2'),
+    url(/fonts/Silver.ttf) format('ttf');
 }
