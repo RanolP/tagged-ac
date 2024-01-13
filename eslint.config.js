@@ -11,6 +11,9 @@ export default [
     files: ['**/*.{ts,tsx}'],
   },
   {
+    ignores: ['.vinxi', 'dist'],
+  },
+  {
     languageOptions: {
       parser: typescriptEslintParser,
     },
