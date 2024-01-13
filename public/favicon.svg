@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="16" height="16">
+    <path
+        d="M4,0 l0,1 l-2,0 l0,1 l-1,0 l0,2 l-1,0 l0,8 l1,0 l0,2 l1,0 l0,1 l2,0 l0,1 l8,0 l0,-1 l2,0 l0,-1 l1,0 l0,-2 l1,0 l0,-8 l-1,0 l0,-2, l-1,0 l0,-1 l-2,0 l0,-1 l-8,0 Z"
+        fill="#639bff" />
+
+    <path d="M9,5 l0,1 l-1,0 l0,4 l1,0 l0,1 l6,0 l0,-1 l1,0 l0,-4 l-1,0 l0,-1 l-6,0 Z" fill="#17ce3a" />
+
+    <mask id="sharpac">
+        <rect x="1" y="2" width="14" height="12" fill="#ffffff" />
+        <rect x="5" y="7" width="1" height="2" fill="#000000" />
+        <rect x="9" y="6" width="1" height="1" fill="#000000" />
+        <rect x="8" y="7" width="1" height="2" fill="#000000" />
+        <rect x="10" y="7" width="1" height="1" fill="#000000" />
+    </mask>
+    <path
+        d="M3,2 l0,3 l-2,0 l0,2 l2,0 l0,2 l-2,0 l0,2 l2,0 l0,3 l2,0 l0,-3 l1,0 l0,3 l2,0 l0,-3 l2,0 l0,-2 l1,0 l0,1 l1,0 l0,-1 l1,0 l0,1 l2,0 l0,-1 l-2,0 l0,-2 l2,0 l0,-1 l-2,0 l0,1 l-2,0 l0,-1 l-1,0 l0,-1 l-2,0 l0,-3 l-2,0 l0,3 l-1,0 l0,-3 l-2,0 Z"
+        fill="#ffffff" mask="url(#sharpac)" />
+</svg>
