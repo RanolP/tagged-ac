@@ -1,5 +1,5 @@
 <div align="center">
-    <img src="public/tagged-ac-logo.png" width="360">
+    <img src="public/logo.svg" width="360">
     <p>🏷️ Play with tags from <a href="https://solved.ac/">solved.ac</a></p>
 </div>
 

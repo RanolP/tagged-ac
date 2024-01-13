@@ -1,0 +1,76 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 74 16" width="370" height="80">
+    <g>
+        <path
+            d="M0,4 l0,8 l1,0 l0,2 l1,0 l0,1 l2,0 l0,1 l45,0 l0,-1 l2,0 l0,-1 l1,0 l0,-2 l1,0 l0,-8 l-1,0 l0,-2 l-1,0 l0,-1 l-2,0 l0,-1 l-45,0 l0,1 l-2,0 l0,1 l-1,0 l0,2 l-1,0 Z"
+            fill="#639bff" />
+
+        <mask id="sharp">
+            <rect x="2" y="3" width="7" height="10" fill="white" />
+            <path fill="#000" d="M5,7 l0,2 l1,0 l0,-2 l-1,0 Z" />
+        </mask>
+        <path
+            d="M3,3 l0,2 l-1,0 l0,2 l1,0 l0,2 l-1,0 l0,2 l1,0 l0,2 l2,0 l0,-2 l1,0 l0,2 l2,0 l0,-2 l1,0 l0,-2 l-1,0 l0,-2 l1,0 l0,-2 l-1,0 l0,-2 l-2,0 l0,2 l-1,0 l0,-2 l-2,0 Z"
+            fill="#ffffff" mask="url(#sharp)" />
+
+        <path
+            d="M11,3 l0,3 l-1,0 l0,1 l1,0 l0,4 l1,0 l0,1 l2,0 l0,-1 l1,0 l0,-1 l-1,0 l0,1 l-2,0 l0,-4 l2,0 l0,-1 l-2,0 l0,-3 l-1,0 Z"
+            fill="#ffffff" />
+
+        <mask id="a">
+            <rect x="16" y="6" width="5" height="6" fill="#fff" />
+            <path fill="#000" d="M17,9 l0,2 l3,0 l0,-2 l-3,0 Z" />
+        </mask>
+        <path d="M17,6 l0,1 l3,0 l0,1 l-3,0 l0,1 l-1,0 l0,2 l1,0 l0,1 l4,0 l0,-5 l-1,0 l0,-1 l-3,0 Z" fill="#ffffff"
+            mask="url(#a)" />
+
+        <mask id="g_0">
+            <rect x="22" y="6" width="5" height="8" fill="#fff" />
+            <path fill="#000" d="M23,7 l0,3 l3,0 l0,-3 l-3,0 Z" />
+        </mask>
+        <path
+            d="M23,6 l0,1 l-1,0 l0,3 l1,0 l0,1 l3,0 l0,2 l-3,0 l0,-1 l-1,0 l0,1 l1,0 l0,1 l3,0 l0,-1 l1,0 l0,-6 l-1,0 l0,-1 l-3,0 Z"
+            fill="#ffffff" mask="url(#g_0)" />
+
+        <mask id="g_1">
+            <rect x="28" y="6" width="5" height="8" fill="#fff" />
+            <path fill="#000" d="M29,7 l0,3 l3,0 l0,-3 l-3,0 Z" />
+        </mask>
+        <path
+            d="M29,6 l0,1 l-1,0 l0,3 l1,0 l0,1 l3,0 l0,2 l-3,0 l0,-1 l-1,0 l0,1 l1,0 l0,1 l3,0 l0,-1 l1,0 l0,-6 l-1,0 l0,-1 l-3,0 Z"
+            fill="#ffffff" mask="url(#g_1)" />
+
+        <mask id="e">
+            <rect x="34" y="6" width="5" height="6" fill="#fff" />
+            <path fill="#000" d="M35,7 l0,1 l3,0 l0,-1 l-3,0 Z" />
+        </mask>
+        <path
+            d="M35,6 l0,1 l-1,0 l0,4 l1,0 l0,1 l3,0 l0,-1 l1,0 l0,-1 l-1,0 l0,1 l-3,0 l0,-2 l4,0 l0,-2 l-1,0 l0,-1 l-3,0 Z"
+            fill="#ffffff" mask="url(#e)" />
+
+        <mask id="d">
+            <rect x="40" y="3" width="5" height="9" fill="#fff" />
+            <path fill="#000" d="M41,7 l0,4 l3,0 l0,-4 l-3,0 Z" />
+        </mask>
+        <path d="M41,6 l0,1 l-1,0 l0,4 l1,0 l0,1 l4,0 l0,-9 l-1,0 l0,3 l-3,0 Z" fill="#ffffff" mask="url(#d)" />
+    </g>
+    <g>
+        <path d="M49,6 l0,4 l-1,0 l0,-1 l-1,0 l0,-2 l1,0 l0,-1 l1,0 Z" fill="#cccccc" />
+        <path d="M49,6 l0,4 l1,0 l0,-1 l1,0 l0,-2 l-1,0 l0,-1 l-1,0 Z" fill="#108926" />
+    </g>
+    <g>
+        <path d="M52,2 l0,2 l1,0 l0,8 l-1,0 l0,2 l19,0 l0,-1 l2,0 l0,-1 l1,0 l0,-8 l-1,0 l0,-1 l-2,0 l0,-1 l-19,0 Z"
+            fill="#17ce3a" />
+
+
+        <mask id="A">
+            <rect x="54" y="4" width="7" height="8" fill="#fff" />
+            <path fill="#000" d="M57,6 l0,2 l1,0 l0,-2 l-1,0 Z" />
+        </mask>
+        <path d="M56,4 l0,2 l-1,0 l0,3 l-1,0 l0,3 l2,0 l0,-2 l3,0 l0,2 l2,0 l0,-3 l-1,0 l0,-3 l-1,0 l0,-2 l-3,0 Z"
+            fill="#ffffff" mask="url(#A)" />
+
+        <path
+            d="M64,4 l0,1 l-1,0 l0,1 l-1,0 l0,4 l1,0 l0,1 l1,0 l0,1 l4,0 l0,-1 l1,0 l0,-2 l-2,0 l0,1 l-2,0 l0,-1 l-1,0 l0,-2 l1,0 l0,-1 l2,0 l0,1 l2,0 l0,-2 l-1,0 l0,-1 l-4,0 Z"
+            fill="#ffffff" />
+    </g>
+</svg>
