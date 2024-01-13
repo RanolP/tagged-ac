@@ -14,6 +14,9 @@ patchedDependencies:
     path: patches/@unocss__eslint-plugin@0.58.3.patch
 
 dependencies:
+  '@solidjs/router':
+    specifier: ^0.10.9
+    version: 0.10.9(solid-js@1.8.10)
   '@solidjs/start':
     specifier: ^0.4.5
     version: 0.4.5(solid-js@1.8.10)(vinxi@0.1.1)(vite@5.0.11)
@@ -1400,6 +1403,14 @@ packages:
   /@sindresorhus/merge-streams@1.0.0:
     resolution: {integrity: sha512-rUV5WyJrJLoloD4NDN1V1+LDMDWOa4OTsT4yYJwQNpTU6FWxkxHpL7eu4w+DmiH8x/EAM1otkPE1+LaspIbplw==}
     engines: {node: '>=18'}
+    dev: false
+
+  /@solidjs/router@0.10.9(solid-js@1.8.10):
+    resolution: {integrity: sha512-TmipgAI2cU7A94fBO1MOEx7j9OYoKtddoOonSFb2221w5I1xxdjLk9W4CZDdyOVdO5z80f70KGJvNq83WFX/Qg==}
+    peerDependencies:
+      solid-js: ^1.8.6
+    dependencies:
+      solid-js: 1.8.10
     dev: false
 
   /@solidjs/router@0.8.4(solid-js@1.8.10):
