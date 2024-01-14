@@ -11,7 +11,7 @@ export default [
     files: ['**/*.{ts,tsx}'],
   },
   {
-    ignores: ['.vinxi', 'dist'],
+    ignores: ['.vinxi', 'dist', '.wrangler'],
   },
   {
     languageOptions: {

@@ -5,6 +5,7 @@ dist
 .vercel
 .netlify
 netlify
+.wrangler
 
 # Environment
 .env
