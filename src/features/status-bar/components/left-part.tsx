@@ -1,7 +1,7 @@
 export function LeftPart() {
   return (
-    <div>
-      <img src="/favicon.svg" h-4 w-4 />
+    <div flex="~ row" items-center justify-self-start>
+      <img src="/favicon.svg" h-8 w-8 />
     </div>
   );
 }
