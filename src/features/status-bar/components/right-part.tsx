@@ -13,4 +13,8 @@ export function RightPart() {
 }
 
 const formatDate = (date: Date | null) =>
-  date ? `${date.getHours()}:${date.getMinutes()}` : '--:--';
+  date
+    ? [date.getHours(), date.getMinutes()]
+        .map((n) => n.toString().padStart(2, '0'))
+        .join(':')
+    : '--:--';
