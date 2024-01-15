@@ -37,4 +37,9 @@ export default [
       'simple-import-sort': eslintPluginSimpleImportSort,
     },
   },
+  {
+    rules: {
+      'no-unused-vars': ['error', { varsIgnorePattern: '^_' }],
+    },
+  },
 ];

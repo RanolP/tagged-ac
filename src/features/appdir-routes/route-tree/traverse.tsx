@@ -21,8 +21,8 @@ export function traverseRouteTree(node: RouteTreeNode) {
     deleteItem(node.originalDefinitionList, node.value.page);
   } else if (node.value.page) {
     /** @todo: support error, loading, recursive layout */
-    const { error, loading, page } = node.value;
-    const [ParentLayoutComponent, path] = resolveParent(node);
+    const { error: _0, loading: _1, page } = node.value;
+    const { ParentLayoutComponent, path } = resolveParent(node);
 
     page.path = path;
     const PageComponent = page.component;
@@ -76,7 +76,7 @@ function resolveParent(node: RouteTreeNode) {
   }
   if (path === '') path = '/';
 
-  const layout =
+  const ParentLayoutComponent =
     layouts.length > 0
       ? ({ children, ...props }: ParentProps<RouteSectionProps>) => {
           let content = children;
@@ -87,7 +87,7 @@ function resolveParent(node: RouteTreeNode) {
         }
       : null;
 
-  return [layout, path];
+  return { ParentLayoutComponent, path };
 }
 
 function deleteItem<T>(array: T[], value: T) {

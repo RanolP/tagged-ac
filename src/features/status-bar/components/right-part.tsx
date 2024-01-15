@@ -1,4 +1,4 @@
-import { createEffect, createSignal, onCleanup } from 'solid-js';
+import { createSignal, onCleanup } from 'solid-js';
 
 export function RightPart() {
   const [now, setNow] = createSignal<Date>(new Date());
