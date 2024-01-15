@@ -1,8 +1,18 @@
+import { CommandInput, Terminal } from '~/features/terminal';
+
 export default function IndexPage() {
   return (
-    <div text-16>
-      <img src="logo.svg" w="[370px]" />
-      <span>tagged.AC 안녕하세요</span>
+    <div>
+      <Terminal
+        initialPrompt={[
+          <img src="logo.svg" w="[370px]" self-center />,
+          <span self-center text-center text-12>
+            solved.ac 태그로 플레이하는 웹 게임 <br />
+            tagged.ac에 오신 것을 환영합니다!
+          </span>,
+        ]}
+        input={<CommandInput></CommandInput>}
+      />
     </div>
   );
 }
