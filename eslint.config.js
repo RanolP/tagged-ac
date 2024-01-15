@@ -7,21 +7,11 @@ import eslintPluginSimpleImportSort from 'eslint-plugin-simple-import-sort';
  * @type {import('eslint').Linter.FlatConfig[]}
  */
 export default [
+  { files: ['**/*.{ts,tsx}'] },
+  { ignores: ['.vinxi', 'dist', '.wrangler'] },
+  { languageOptions: { parser: typescriptEslintParser } },
   {
-    files: ['**/*.{ts,tsx}'],
-  },
-  {
-    ignores: ['.vinxi', 'dist', '.wrangler'],
-  },
-  {
-    languageOptions: {
-      parser: typescriptEslintParser,
-    },
-  },
-  {
-    plugins: {
-      unocss,
-    },
+    plugins: { unocss },
     rules: {
       'unocss/order': 'error',
       'unocss/order-attributify': 'error',
@@ -29,12 +19,10 @@ export default [
   },
   eslintPluginPrettierRecommended,
   {
+    plugins: { 'simple-import-sort': eslintPluginSimpleImportSort },
     rules: {
       'simple-import-sort/imports': 'error',
       'simple-import-sort/exports': 'error',
-    },
-    plugins: {
-      'simple-import-sort': eslintPluginSimpleImportSort,
     },
   },
   {
