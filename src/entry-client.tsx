@@ -1,3 +1,4 @@
+/* @refresh granular */
 import 'virtual:uno.css';
 import '@unocss/reset/tailwind.css';
 import './styles/Silver.css';
