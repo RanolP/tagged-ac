@@ -1,0 +1,9 @@
+@font-face {
+  font-family: HEDunggeunmokkol;
+  size-adjust: 80%;
+  unicode-range: U+AC00-D7AF;
+  src:
+    local(),
+    url(/fonts/HEDunggeunmokkol12.woff2) format('woff2'),
+    url(/fonts/HEDunggeunmokkol12.ttf) format('truetype');
+}

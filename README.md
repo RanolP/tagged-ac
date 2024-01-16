@@ -11,5 +11,6 @@
 
 ## Special Thanks
 
+- [HE둥근모꼴12](https://wintiger0222.github.io/Silhoua_font/HEKimjungtae/) by TaeYun An (WindowsTiger), 김중태 IT위원장
 - [Silver Font](https://poppyworks.itch.io/silver) by [Poppy Works](http://poppy.works/)
 - [solved.ac](https://solved.ac) by [Suhyun Park](https://shiftpsh.com)

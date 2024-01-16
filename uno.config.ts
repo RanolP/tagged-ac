@@ -10,7 +10,7 @@ export default defineConfig({
 
   theme: {
     fontFamily: {
-      mono: ['Silver', 'monospace'],
+      mono: ['HEDunggeunmokkol', 'Silver', 'monospace'],
     },
   },
 

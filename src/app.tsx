@@ -1,6 +1,4 @@
 // @refresh reload
-import '~/styles/Silver.css';
-
 import { Router } from '@solidjs/router';
 import { Suspense } from 'solid-js';
 

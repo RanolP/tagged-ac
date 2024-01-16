@@ -9,10 +9,11 @@ export function StatusBar() {
         grid="~ areas-[auto_auto_auto]"
         w="100%"
         align-center
+        h-12
         bg-pink
-        px-4
+        px-3
         py-0
-        text-9
+        text-6
         color-white
         font-mono
       >

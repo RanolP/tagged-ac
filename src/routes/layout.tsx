@@ -4,7 +4,7 @@ import { StatusBar } from '~/features/status-bar';
 
 export default function Layout({ children }: RouteSectionProps) {
   return (
-    <div lh="[1]" font-mono>
+    <div lh-normal font-mono>
       <StatusBar />
       {children}
     </div>
