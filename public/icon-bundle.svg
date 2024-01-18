@@ -1,17 +1,33 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="1em" height="1em">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 72" width="1em" height="1em">
     <defs>
-        <g id="box">
-            <path d="M4,4 l0,16 l16,0 l0,-16 l-15,0 l0,1 l14,0 l0,14 l-14,0 l0,-15 l-1,0 Z" fill="currentColor" />
-        </g>
-        <g id="command-box">
-            <use href="#box" />
+        <symbol id="_box">
+            <path id="_box_outline" d="M4,4 l0,16 l16,0 l0,-16 l-15,0 l0,1 l14,0 l0,14 l-14,0 l0,-15 l-1,0 Z" />
+        </symbol>
+        <symbol id="_circle">
+            <path id="_circle_fill"
+                d="M8,4 l0,1 l-2,0 l0,1 l-1,0 l0,2 l-1,0 l0,8 l1,0 l0,2 l1,0 l0,1 l2,0 l0,1 l8,0 l0,-1 l2,0 l0,-1 l1,0 l0,-2 l1,0 l0,-8 l-1,0 l0,-2 -1,0 l0,-1 l-2,0 l0,-1 l-8,0 Z" />
+        </symbol>
+        <symbol id="command-prompt-box">
+            <use href="#_box" fill="currentColor" />
             <path
                 d="M6,7 l3,0 l0,1 l1,0 l0,1 l1,0 l0,1 l1,0 l0,1 l1,0 l0,2 l-1,0 l0,1 l-1,0 l0,1 l-1,0 l0,1 l-1,0 l0,1 l-3,0 l0,-1 l1,0 l0,-1 l1,0 l0,-1 l1,0 l0,-1 l1,0 l0,-2 l-1,0 l0,-1 l-1,0 l0,-1 l-1,0 l0,-1 l-1,0 l0,-1 Z"
                 fill="currentColor" />
             <rect x="15" y="7" width="2" height="2" fill="currentColor" />
             <rect x="13" y="16" width="4" height="1" fill="currentColor" />
-        </g>
+        </symbol>
+
+        <symbol id="command-execution-circle">
+            <use href="#_circle" fill="#ac3232" />
+            <path
+                d="M11,5 l0,1 l-2,0 l0,1 l2,0 l0,4 l-2,0 l0,-4 l-1,0 l0,4 l1,0 l0,1 l2,0 l0,4 l-2,0 l0,-1 l-1,0 l0,1 l1,0 l0,1 l2,0 l0,2 l2,0 l0,-2 l2,0 l0,-1 l-2,0 l0,-4 l2,0 l0,4 l1,0 l0,-4 l-1,0 l0,-1 l-2,0 l0,-4 l2,0 l0,1 l1,0 l0,-1 l-1,0 l0,-1 l-2,0 l0,-1 l-2,0 Z"
+                fill="currentColor" />
+        </symbol>
+
+        <symbol id="null">
+        </symbol>
     </defs>
 
-    <use x="0" y="0" href="#command-box" />
+    <use x="0" y="0" href="#command-prompt-box" />
+    <use x="0" y="24" href="#command-execution-circle" />
+    <use x="0" y="48" href="#null" />
 </svg>

@@ -32,7 +32,7 @@ export function CommandInput(props: Props) {
   return (
     <div flex="~ col" relative w-full text-8>
       <div ref={setReference} flex="~ row" h-14 w-full items-center p-2>
-        <Icon name="command-box" mr-2 />
+        <Icon name="command-prompt-box" mr-2 />
         <input
           h="[1em]"
           flex-1
@@ -46,6 +46,7 @@ export function CommandInput(props: Props) {
       <AutoCompletion
         ref={setFloating}
         suggestions={suggestionsFiltered()}
+        flex={position.placement === 'bottom-end' ? 'col' : 'col-reverse'}
         style={{
           position: position.strategy,
           left: `${position.x ?? 0}px`,

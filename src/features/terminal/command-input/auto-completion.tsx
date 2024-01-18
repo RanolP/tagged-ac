@@ -1,13 +1,11 @@
 import { JSX, splitProps } from 'solid-js';
 
+import { Icon, IconName } from '~/design-system/icon/icon';
+
 export interface Suggestion {
   value: string;
-  display:
-    | {
-        title: string;
-        description?: string;
-      }
-    | JSX.Element;
+  icon?: IconName;
+  description?: string;
 }
 
 interface Props extends JSX.HTMLAttributes<HTMLDivElement> {
@@ -21,19 +19,23 @@ export function AutoCompletion(props: Props) {
       flex="~ col"
       bg="#000 opacity-50"
       w="[calc(100%_-_3rem)]"
+      text-6
       backdrop-blur-lg
       {...others}
     >
-      {local.suggestions.map(({ display }) =>
-        display != null && typeof display === 'object' && 'title' in display ? (
-          <div grid="~ areas-[auto_auto]" w-full px-4 py-2>
-            <span>{display.title}</span>
-            <span justify-self-end>{display.description}</span>
-          </div>
-        ) : (
-          display
-        ),
-      )}
+      {local.suggestions.map(({ value, icon, description }) => (
+        <div grid="~ areas-[auto_auto]" w-full px-2 py-2>
+          <span flex="~ row">
+            <Icon name={icon ?? 'null'} mr-1 />
+            <span>{value}</span>
+          </span>
+          {description && (
+            <span justify-self-end pr-2>
+              {description}
+            </span>
+          )}
+        </div>
+      ))}
     </div>
   );
 }

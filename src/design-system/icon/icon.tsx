@@ -1,6 +1,9 @@
 import { JSX, splitProps } from 'solid-js';
 
-export type IconName = 'command-box';
+export type IconName =
+  | 'command-prompt-box'
+  | 'command-execution-circle'
+  | 'null';
 
 interface Props
   extends Omit<

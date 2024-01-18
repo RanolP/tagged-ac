@@ -15,25 +15,19 @@ export default function IndexPage() {
           <CommandInput
             suggestions={[
               {
+                icon: 'command-execution-circle',
                 value: 'ls',
-                display: {
-                  title: 'ls',
-                  description: '방 목록을 확인합니다.',
-                },
+                description: '방 목록을 확인합니다.',
               },
               {
+                icon: 'command-execution-circle',
                 value: 'join',
-                display: {
-                  title: 'join',
-                  description: '방에 들어갑니다.',
-                },
+                description: '방에 들어갑니다.',
               },
               {
+                icon: 'command-execution-circle',
                 value: 'make',
-                display: {
-                  title: 'make',
-                  description: '방을 만듭니다.',
-                },
+                description: '방을 만듭니다.',
               },
             ]}
           ></CommandInput>
