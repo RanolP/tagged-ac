@@ -6,7 +6,12 @@ import {
 } from 'unocss';
 
 export default defineConfig({
-  presets: [presetUno(), presetAttributify()],
+  presets: [
+    presetUno(),
+    presetAttributify({
+      trueToNonValued: true,
+    }),
+  ],
 
   theme: {
     fontFamily: {

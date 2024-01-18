@@ -4,13 +4,13 @@ import { StatusBar } from '~/features/status-bar';
 
 import { Background } from './_components/background';
 
-export default function Layout({ children }: RouteSectionProps) {
+export default function Layout(props: RouteSectionProps) {
   return (
     <div lh-normal font-mono>
       <Background />
       <div relative z-1>
         <StatusBar />
-        {children}
+        {props.children}
       </div>
     </div>
   );
