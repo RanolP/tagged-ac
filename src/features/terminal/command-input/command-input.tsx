@@ -1,3 +1,5 @@
+import { flip, offset } from '@floating-ui/dom';
+import { useFloating } from 'solid-floating-ui';
 import { createMemo, createSignal, JSX } from 'solid-js';
 
 import { Icon } from '~/design-system/icon/icon';
@@ -19,9 +21,17 @@ export function CommandInput(props: Props) {
     return props.suggestions.filter((s) => s.value.startsWith(command[0]));
   });
 
+  const [reference, setReference] = createSignal<HTMLDivElement>();
+  const [floating, setFloating] = createSignal<HTMLDivElement>();
+  const position = useFloating(reference, floating, {
+    strategy: 'absolute',
+    placement: 'bottom-end',
+    middleware: [offset(16), flip()],
+  });
+
   return (
     <div flex="~ col" relative w-full text-8>
-      <div flex="~ row" h-14 w-full items-center p-2>
+      <div ref={setReference} flex="~ row" h-14 w-full items-center p-2>
         <Icon name="command-box" mr-2 />
         <input
           h="[1em]"
@@ -33,7 +43,15 @@ export function CommandInput(props: Props) {
           value={value()}
         />
       </div>
-      <AutoCompletion absolute top-16 suggestions={suggestionsFiltered()} />
+      <AutoCompletion
+        ref={setFloating}
+        suggestions={suggestionsFiltered()}
+        style={{
+          position: position.strategy,
+          left: `${position.x ?? 0}px`,
+          top: `${position.y ?? 0}px`,
+        }}
+      />
     </div>
   );
 }

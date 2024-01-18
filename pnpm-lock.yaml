@@ -14,6 +14,9 @@ patchedDependencies:
     path: patches/@unocss__eslint-plugin@0.58.3.patch
 
 dependencies:
+  '@floating-ui/dom':
+    specifier: ^1.5.4
+    version: 1.5.4
   '@solidjs/router':
     specifier: ^0.10.9
     version: 0.10.9(solid-js@1.8.10)
@@ -23,6 +26,9 @@ dependencies:
   '@unocss/reset':
     specifier: ^0.58.3
     version: 0.58.3
+  solid-floating-ui:
+    specifier: ^0.3.0
+    version: 0.3.0(@floating-ui/dom@1.5.4)(solid-js@1.8.10)
   solid-js:
     specifier: ^1.8.10
     version: 1.8.10
@@ -834,6 +840,23 @@ packages:
   /@fastify/busboy@2.1.0:
     resolution: {integrity: sha512-+KpH+QxZU7O4675t3mnkQKcZZg56u+K/Ct2K+N2AZYNVK8kyeo/bI18tI8aPm3tvNNRyTWfj6s5tnGNlcbQRsA==}
     engines: {node: '>=14'}
+    dev: false
+
+  /@floating-ui/core@1.5.3:
+    resolution: {integrity: sha512-O0WKDOo0yhJuugCx6trZQj5jVJ9yR0ystG2JaNAemYUWce+pmM6WUEFIibnWyEJKdrDxhm75NoSRME35FNaM/Q==}
+    dependencies:
+      '@floating-ui/utils': 0.2.1
+    dev: false
+
+  /@floating-ui/dom@1.5.4:
+    resolution: {integrity: sha512-jByEsHIY+eEdCjnTVu+E3ephzTOzkQ8hgUfGwos+bg7NlH33Zc5uO+QHz1mrQUOgIKKDD1RtS201P9NvAfq3XQ==}
+    dependencies:
+      '@floating-ui/core': 1.5.3
+      '@floating-ui/utils': 0.2.1
+    dev: false
+
+  /@floating-ui/utils@0.2.1:
+    resolution: {integrity: sha512-9TANp6GPoMtYzQdt54kfAyMmz1+osLlXdg2ENroU7zzrtflTLrrC/lgrIfaSe+Wu0b89GKccT7vxXA0MoAIO+Q==}
     dev: false
 
   /@humanwhocodes/config-array@0.11.13:
@@ -4927,6 +4950,17 @@ packages:
 
   /smob@1.4.1:
     resolution: {integrity: sha512-9LK+E7Hv5R9u4g4C3p+jjLstaLe11MDsL21UpYaCNmapvMkYhqCV4A/f/3gyH8QjMyh6l68q9xC85vihY9ahMQ==}
+    dev: false
+
+  /solid-floating-ui@0.3.0(@floating-ui/dom@1.5.4)(solid-js@1.8.10):
+    resolution: {integrity: sha512-+qRte5GCYjq07C65O7BtL+IlmoM7MG9PG7TrWr3h7kr6g9vdRsFeh/CIy275P8hD62vUWCXvgkjCG54DYadeyA==}
+    engines: {node: '>=10'}
+    peerDependencies:
+      '@floating-ui/dom': ^1.5
+      solid-js: ^1.8
+    dependencies:
+      '@floating-ui/dom': 1.5.4
+      solid-js: 1.8.10
     dev: false
 
   /solid-js@1.8.10:

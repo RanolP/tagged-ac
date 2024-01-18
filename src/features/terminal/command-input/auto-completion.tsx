@@ -20,7 +20,6 @@ export function AutoCompletion(props: Props) {
     <div
       flex="~ col"
       bg="#000 opacity-50"
-      ml="3rem"
       w="[calc(100%_-_3rem)]"
       backdrop-blur-lg
       {...others}

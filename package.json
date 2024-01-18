@@ -10,9 +10,11 @@
     "prepare": "simple-git-hooks"
   },
   "dependencies": {
+    "@floating-ui/dom": "^1.5.4",
     "@solidjs/router": "^0.10.9",
     "@solidjs/start": "^0.4.5",
     "@unocss/reset": "^0.58.3",
+    "solid-floating-ui": "^0.3.0",
     "solid-js": "^1.8.10",
     "vinxi": "0.1.1"
   },
