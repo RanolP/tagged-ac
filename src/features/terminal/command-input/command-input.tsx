@@ -3,11 +3,12 @@ import { useFloating } from 'solid-floating-ui';
 import { createMemo, createSignal, JSX } from 'solid-js';
 
 import { Icon } from '~/design-system/icon/icon';
+import { StructuredCommand } from '~/features/command/structured-command';
 
-import { AutoCompletion, Suggestion } from './auto-completion';
+import { AutoCompletion } from './auto-completion';
 
 interface Props {
-  suggestions: Suggestion[];
+  commands: StructuredCommand[];
 }
 
 export function CommandInput(props: Props) {
@@ -17,8 +18,40 @@ export function CommandInput(props: Props) {
   };
 
   const suggestionsFiltered = createMemo(() => {
-    const command = value().split(' ');
-    return props.suggestions.filter((s) => s.value.startsWith(command[0]));
+    const input = value().trim().split(/ +/);
+    let commands = props.commands;
+
+    for (let i = 0; i < input.length; i++) {
+      const groupedCommands: Record<string, StructuredCommand[]> = {};
+      const filtered = [];
+      for (const command of commands) {
+        if (command.name.length > i && !command.name[i].startsWith(input[i]))
+          continue;
+
+        filtered.push(command);
+        const groupKey = command.name.slice(0, i).join(' ');
+        if (groupKey in groupedCommands) {
+          groupedCommands[groupKey].push(command);
+        } else {
+          groupedCommands[groupKey] = [command];
+        }
+      }
+      for (const group of Object.values(groupedCommands)) {
+        const max = group.reduce((l, r) =>
+          l.name.length > r.name.length ? l : r,
+        );
+        for (const command of group) {
+          if (command.name.length < Math.min(input.length, max.name.length)) {
+            filtered.splice(filtered.indexOf(command), 1);
+          }
+        }
+      }
+
+      commands = filtered;
+    }
+    return commands.flatMap((command) =>
+      command.suggest(input.slice(command.name.length)),
+    );
   });
 
   const [reference, setReference] = createSignal<HTMLDivElement>();
@@ -31,16 +64,17 @@ export function CommandInput(props: Props) {
 
   return (
     <div flex="~ col" relative w-full text-8>
-      <div ref={setReference} flex="~ row" h-14 w-full items-center p-2>
-        <Icon name="command-prompt-box" mr-2 />
+      <div ref={setReference} flex="~ row" h-14 w-full items-center px-2>
+        <Icon name="command-prompt-box" my-2 mr-2 />
         <input
-          h="[1em]"
+          h="[2em]"
+          onInput={onInput}
+          value={value()}
           flex-1
           border-none
           bg-transparent
+          py-2
           outline-none
-          onInput={onInput}
-          value={value()}
         />
       </div>
       <AutoCompletion
