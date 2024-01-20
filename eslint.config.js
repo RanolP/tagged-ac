@@ -1,14 +1,14 @@
+import typescriptEslintPlugin from '@typescript-eslint/eslint-plugin';
 import typescriptEslintParser from '@typescript-eslint/parser';
 import unocss from '@unocss/eslint-plugin';
 import eslintPluginPrettierRecommended from 'eslint-plugin-prettier/recommended';
 import eslintPluginSimpleImportSort from 'eslint-plugin-simple-import-sort';
-import typescriptEslintPlugin from '@typescript-eslint/eslint-plugin';
 
 /**
  * @type {import('eslint').Linter.FlatConfig[]}
  */
 export default [
-  { files: ['**/*.{ts,tsx}'] },
+  { files: ['**/*.{ts,tsx}', 'eslint.config.js', 'lint-staged.config.mjs'] },
   { ignores: ['.vinxi', 'dist', '.wrangler'] },
   { languageOptions: { parser: typescriptEslintParser } },
   {

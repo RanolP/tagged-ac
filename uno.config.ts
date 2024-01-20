@@ -6,17 +6,10 @@ import {
 } from 'unocss';
 
 export default defineConfig({
-  presets: [
-    presetUno(),
-    presetAttributify({
-      trueToNonValued: true,
-    }),
-  ],
+  presets: [presetUno(), presetAttributify({ trueToNonValued: true })],
 
   theme: {
-    fontFamily: {
-      mono: ['HEDunggeunmokkol', 'Silver', 'monospace'],
-    },
+    fontFamily: { mono: ['HEDunggeunmokkol', 'Silver', 'monospace'] },
   },
 
   transformers: [transformerVariantGroup()],
