@@ -8,6 +8,8 @@ export default createHandler(() => (
           <meta charset="utf-8" />
           <meta name="viewport" content="width=device-width, initial-scale=1" />
           <link rel="icon" href="/favicon.svg" />
+          <link rel="stylesheet" href="/fonts/HEDunggeunmokkol.css" />
+          <link rel="stylesheet" href="/fonts/Silver.css" />
           {assets}
         </head>
         <body>

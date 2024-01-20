@@ -7,3 +7,10 @@
     url(/fonts/Silver.woff2) format('woff2'),
     url(/fonts/Silver.ttf) format('truetype');
 }
+@font-face {
+  font-family: Silver-Original;
+  src:
+    local(),
+    url(/fonts/Silver.woff2) format('woff2'),
+    url(/fonts/Silver.ttf) format('truetype');
+}

@@ -9,7 +9,7 @@ const LsCommand = defineCommand(
   () => {
     return [
       {
-        icon: 'command-execution-circle',
+        icon: 'execute-circle',
         value: 'ls',
         description: '방 목록을 확인합니다',
       },
@@ -21,14 +21,24 @@ const JoinCommand = defineCommand(
   () => {
     return [];
   },
-  () => {
-    return [
-      {
-        icon: 'command-execution-circle',
-        value: 'join <room>',
-        description: '방에 들어갑니다',
-      },
-    ];
+  (args) => {
+    if (args.length === 0) {
+      return [
+        {
+          icon: 'execute-circle',
+          value: 'join <room>',
+          description: '방에 들어갑니다',
+        },
+      ];
+    } else {
+      return [
+        {
+          icon: 'parameters-circle',
+          value: '방 ID',
+          description: '방 이름',
+        },
+      ];
+    }
   },
 );
 const MakeCommand = defineCommand(
@@ -39,7 +49,7 @@ const MakeCommand = defineCommand(
   () => {
     return [
       {
-        icon: 'command-execution-circle',
+        icon: 'execute-circle',
         value: 'make',
         description: '방을 만듭니다',
       },

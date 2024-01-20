@@ -18,14 +18,19 @@ export function CommandInput(props: Props) {
   };
 
   const suggestionsFiltered = createMemo(() => {
-    const input = value().trim().split(/ +/);
+    const input = value().split(/ +/);
     let commands = props.commands;
 
     for (let i = 0; i < input.length; i++) {
       const groupedCommands: Record<string, StructuredCommand[]> = {};
       const filtered = [];
       for (const command of commands) {
-        if (command.name.length > i && !command.name[i].startsWith(input[i]))
+        if (
+          command.name.length > i &&
+          !(i === input.length - 1
+            ? command.name[i].startsWith(input[i])
+            : command.name[i] === input[i])
+        )
           continue;
 
         filtered.push(command);
@@ -36,13 +41,15 @@ export function CommandInput(props: Props) {
           groupedCommands[groupKey] = [command];
         }
       }
-      for (const group of Object.values(groupedCommands)) {
-        const max = group.reduce((l, r) =>
-          l.name.length > r.name.length ? l : r,
-        );
-        for (const command of group) {
-          if (command.name.length < Math.min(input.length, max.name.length)) {
-            filtered.splice(filtered.indexOf(command), 1);
+      if (input[i].length > 0) {
+        for (const group of Object.values(groupedCommands)) {
+          const max = group.reduce((l, r) =>
+            l.name.length > r.name.length ? l : r,
+          );
+          for (const command of group) {
+            if (command.name.length < Math.min(input.length, max.name.length)) {
+              filtered.splice(filtered.indexOf(command), 1);
+            }
           }
         }
       }

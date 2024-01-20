@@ -1,10 +1,11 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 72" width="1em" height="1em">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96" width="100%" height="100%"
+    preserveAspectRatio="xMidyMid meet">
     <defs>
         <symbol id="_box">
-            <path id="_box_outline" d="M4,4 l0,16 l16,0 l0,-16 l-15,0 l0,1 l14,0 l0,14 l-14,0 l0,-15 l-1,0 Z" />
+            <path d="M4,4 l0,16 l16,0 l0,-16 l-15,0 l0,1 l14,0 l0,14 l-14,0 l0,-15 l-1,0 Z" />
         </symbol>
         <symbol id="_circle">
-            <path id="_circle_fill"
+            <path
                 d="M8,4 l0,1 l-2,0 l0,1 l-1,0 l0,2 l-1,0 l0,8 l1,0 l0,2 l1,0 l0,1 l2,0 l0,1 l8,0 l0,-1 l2,0 l0,-1 l1,0 l0,-2 l1,0 l0,-8 l-1,0 l0,-2 -1,0 l0,-1 l-2,0 l0,-1 l-8,0 Z" />
         </symbol>
         <symbol id="command-prompt-box">
@@ -15,19 +16,97 @@
             <rect x="15" y="7" width="2" height="2" fill="currentColor" />
             <rect x="13" y="16" width="4" height="1" fill="currentColor" />
         </symbol>
+        <symbol id="question-box">
+            <use href="#_box" fill="currentColor" />
+            <path
+                d="M10,7 l0,1 l-1,0 l0,2 l2,0 l0,-1 l2,0 l0,2 l-1,0 l0,1 l-1,0 l0,3 l2,0 l0,-2 l1,0 l0,-1 l1,0 l0,-4 l-1,0 l0,-1 l-4,0 Z"
+                fill="currentColor" />
+            <rect x="11" y="16" width="2" height="2" fill="currentColor" />
+        </symbol>
 
-        <symbol id="command-execution-circle">
+        <symbol id="execute-circle">
             <use href="#_circle" fill="#ac3232" />
             <path
                 d="M11,5 l0,1 l-2,0 l0,1 l2,0 l0,4 l-2,0 l0,-4 l-1,0 l0,4 l1,0 l0,1 l2,0 l0,4 l-2,0 l0,-1 l-1,0 l0,1 l1,0 l0,1 l2,0 l0,2 l2,0 l0,-2 l2,0 l0,-1 l-2,0 l0,-4 l2,0 l0,4 l1,0 l0,-4 l-1,0 l0,-1 l-2,0 l0,-4 l2,0 l0,1 l1,0 l0,-1 l-1,0 l0,-1 l-2,0 l0,-1 l-2,0 Z"
                 fill="currentColor" />
+        </symbol>
+        <symbol id="parameters-circle">
+            <use href="#_circle" fill="#5b6ee1" />
+            <path id="_less-than"
+                d="M11,7 l-2,0 l0,1 l-1,0 l0,1 l-1,0 l0,1 l-1,0 l0,1 l-1,0 l0,2 l1,0 l0,1 l1,0 l0,1 l1,0 l0,1 l1,0 l0,1 l2,0 l0,-1 l-1,0 l0,-1 l-1,0 l0,-1 l-1,0 l0,-1 l-1,0 l0,-2 l1,0 l0,-1 l1,0 l0,-1 l1,0 l0,-1 l1,0 l0,-1 Z"
+                fill="currentColor" />
+
+            <use x="-24" y="-24" href="#_less-than" transform="rotate(180)" />
         </symbol>
 
         <symbol id="null">
         </symbol>
     </defs>
 
-    <use x="0" y="0" href="#command-prompt-box" />
-    <use x="0" y="24" href="#command-execution-circle" />
-    <use x="0" y="48" href="#null" />
+
+    <defs>
+        <pattern id="__pixel_grid" width="1" height="1" patternUnits="userSpaceOnUse">
+            <rect x="0" y="0" width="1" height="1" stroke="#fff" stroke-width="0.02" fill="none" />
+        </pattern>
+        <pattern id="__cell_grid" width="24" height="24" patternUnits="userSpaceOnUse">
+            <rect x="0" y="0" width="24" height="24" stroke="#ddd" stroke-width="0.25" fill="none" />
+        </pattern>
+        <pattern id="__grid" width="48" height="48" patternUnits="userSpaceOnUse">
+            <rect x="0" y="0" width="24" height="24" fill="#111" />
+            <rect x="0" y="24" width="24" height="24" fill="#333" />
+            <rect x="24" y="24" width="24" height="24" fill="#111" />
+            <rect x="24" y="0" width="24" height="24" fill="#333" />
+        </pattern>
+    </defs>
+
+    <rect width="100%" height="100%" fill="url(#__grid)" />
+    <style>
+        @import '/fonts/Silver.css';
+
+        text {
+            font-family: Silver;
+            font-size: 2px;
+            text-align: center;
+        }
+
+        * {
+            color: #eee;
+        }
+    </style>
+
+    <g id="icons"></g>
+
+    <rect width="100%" height="100%" fill="url(#__pixel_grid)" style="mix-blend-mode: difference;" />
+    <rect width="100%" height="100%" fill="url(#__pixel_grid)" opacity="0.25" />
+
+    <g id="labels" />
+
+    <rect width="100%" height="100%" fill="url(#__cell_grid)" />
+
+    <script type="text/javascript">
+        // <![CDATA[
+        const iconTable = [
+            ['command-prompt-box', 'question-box'],
+            ['execute-circle', 'parameters-circle'],
+            ['null'],
+        ];
+
+        const $icons = document.getElementById('icons');
+        const $labels = document.getElementById('labels');
+        for (let y = 0; y < iconTable.length; y++) {
+            const row = iconTable[y];
+            for (let x = 0; x < row.length; x++) {
+                $icons.innerHTML += `<use x="${x * 24}" y="${y * 24}" href="#${row[x]}" />`
+                $labels.innerHTML += `
+                    <g>
+                        <rect x="${(x + 1) * 24 - row[x].length - 1}" y="${(y + 1) * 24 - 2}" width="${row[x].length + 1}" height="2" fill="#eee" />
+                        ${Array.from(row[x]).map((ch, i) => `
+                            <text x="${(x + 1) * 24 - row[x].length + i}" y="${(y + 1) * 24 - 2 + 1 / 16}" dominant-baseline="hanging" textLength="1px" text-anchor="middle">${ch}</text>
+                        `).join('\n')}
+                    </g>
+                `
+            }
+        }
+        // ]]>
+    </script>
 </svg>

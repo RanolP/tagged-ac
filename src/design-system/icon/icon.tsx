@@ -2,7 +2,9 @@ import { JSX, splitProps } from 'solid-js';
 
 export type IconName =
   | 'command-prompt-box'
-  | 'command-execution-circle'
+  | 'question-box'
+  | 'execute-circle'
+  | 'parameters-circle'
   | 'null';
 
 interface Props
