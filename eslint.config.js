@@ -9,7 +9,7 @@ import eslintPluginSimpleImportSort from 'eslint-plugin-simple-import-sort';
  */
 export default [
   { files: ['**/*.{ts,tsx}', 'eslint.config.js', 'lint-staged.config.mjs'] },
-  { ignores: ['.vinxi', 'dist', '.wrangler'] },
+  { ignores: ['.vinxi', 'dist', '.wrangler', 'src/server/database/types.ts'] },
   { languageOptions: { parser: typescriptEslintParser } },
   {
     plugins: { unocss },
@@ -33,7 +33,7 @@ export default [
     rules: {
       '@typescript-eslint/no-unused-vars': [
         'error',
-        { varsIgnorePattern: '^_' },
+        { varsIgnorePattern: '^_', argsIgnorePattern: '^_' },
       ],
     },
   },

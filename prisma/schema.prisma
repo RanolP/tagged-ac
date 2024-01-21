@@ -1,0 +1,16 @@
+model Advertisement {
+    id          String   @id
+    valid_until DateTime
+}
+
+generator kysely {
+    provider = "prisma-kysely"
+
+    output   = "../src/server/database"
+    fileName = "types.ts"
+}
+
+datasource db {
+    provider = "sqlite"
+    url      = "./local.db"
+}

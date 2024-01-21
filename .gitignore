@@ -28,3 +28,7 @@ Thumbs.db
 
 # vinxi
 .vinxi
+
+# prisma + kysely
+src/server/database/types.ts
+local.db
