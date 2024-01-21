@@ -1,4 +1,4 @@
-import { FileRoutes } from '@solidjs/start';
+import { apiRoutes, FileRoutes } from '@solidjs/start';
 import { JSX } from 'solid-js';
 
 import { parseRouteTree, traverseRouteTree } from './route-tree';
@@ -13,4 +13,11 @@ export function AppdirRoutes(): JSX.Element {
   traverseRouteTree(tree);
 
   return definitionList as unknown as JSX.Element;
+}
+
+export function transformApiRoutes() {
+  const tree = parseRouteTree(
+    apiRoutes as unknown as SolidStartRouteDefinition<string, unknown>[],
+  );
+  traverseRouteTree(tree);
 }

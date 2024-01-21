@@ -9,6 +9,9 @@ overrides:
   typescript: ^5.3.3
 
 patchedDependencies:
+  '@solidjs/start@0.4.10':
+    hash: dw7tpkjjzmcbkkz57l5nij2hly
+    path: patches/@solidjs__start@0.4.10.patch
   '@unocss/eslint-plugin@0.58.3':
     hash: shsqkmp2c4cavevcmyxe3nadky
     path: patches/@unocss__eslint-plugin@0.58.3.patch
@@ -22,7 +25,7 @@ dependencies:
     version: 0.10.9(solid-js@1.8.11)
   '@solidjs/start':
     specifier: ^0.4.10
-    version: 0.4.10(solid-js@1.8.11)(vinxi@0.1.4)(vite@5.0.11)
+    version: 0.4.10(patch_hash=dw7tpkjjzmcbkkz57l5nij2hly)(solid-js@1.8.11)(vinxi@0.1.4)(vite@5.0.11)
   '@typescript-eslint/eslint-plugin':
     specifier: ^6.19.0
     version: 6.19.0(@typescript-eslint/parser@6.19.0)(eslint@8.56.0)(typescript@5.3.3)
@@ -1442,7 +1445,7 @@ packages:
       solid-js: 1.8.11
     dev: false
 
-  /@solidjs/start@0.4.10(solid-js@1.8.11)(vinxi@0.1.4)(vite@5.0.11):
+  /@solidjs/start@0.4.10(patch_hash=dw7tpkjjzmcbkkz57l5nij2hly)(solid-js@1.8.11)(vinxi@0.1.4)(vite@5.0.11):
     resolution: {integrity: sha512-pokRoUm6ZibtgytzIs3OhhsjdfRIXlun7mokSClEStjXMvuHzAGBowuwkxKgOOwsLGFh4nXxp/l+H57EPgQq4A==}
     dependencies:
       '@vinxi/plugin-directives': 0.1.2(vinxi@0.1.4)
@@ -1466,6 +1469,7 @@ packages:
       - vinxi
       - vite
     dev: false
+    patched: true
 
   /@types/babel__core@7.20.5:
     resolution: {integrity: sha512-qoQprZvz5wQFJwMDqeseRXWv3rqMvhgpbXFfVyWhbx9X47POIA6i/+dXefEmZKoAgOaTdaIgNSMqMIU61yRyzA==}

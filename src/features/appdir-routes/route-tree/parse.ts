@@ -15,7 +15,9 @@ export function parseRouteTree(
 
   let cursor = 0;
   while (cursor < definitionList.length) {
-    const rawSegmentList: string[] = definitionList[cursor].id.split('/');
+    const rawSegmentList: string[] = (
+      definitionList[cursor].id ?? `${definitionList[cursor].path}`
+    ).split('/');
     const lastSegment = rawSegmentList.at(-1);
     if (!isLeafRoute(lastSegment)) {
       definitionList.splice(cursor, 1);

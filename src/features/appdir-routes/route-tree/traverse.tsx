@@ -1,6 +1,7 @@
 import { RouteSectionProps } from '@solidjs/router';
 import { Component, lazy, ParentProps } from 'solid-js';
 
+import { Param } from '../solid-start-route-definition';
 import { RouteTreeNode } from './types';
 
 export function traverseRouteTree(node: RouteTreeNode) {
@@ -17,8 +18,9 @@ export function traverseRouteTree(node: RouteTreeNode) {
   }
 
   if (node.value.route) {
-    node.value.route.type = 'api';
-    deleteItem(node.originalDefinitionList, node.value.page);
+    const { matchSegments, params } = resolveParent(node);
+    node.value.route.matchSegments = matchSegments;
+    node.value.route.params = params;
   } else if (node.value.page) {
     /** @todo: support error, loading, recursive layout */
     const { error: _0, loading: _1, page } = node.value;
@@ -54,16 +56,28 @@ export function traverseRouteTree(node: RouteTreeNode) {
 function resolveParent(node: RouteTreeNode) {
   const layouts: Array<Component<RouteSectionProps>> = [];
   let path = '';
+  const matchSegments: Array<string | null> = [];
+  const params: Array<Param> = [];
 
   let current: RouteTreeNode | undefined = node;
+  let n = 0;
   while (current) {
     if (current.parent)
       switch (current.segment.type) {
         case 'static':
+          n++;
+          matchSegments.splice(0, 0, current.segment.name);
           path = `/${current.segment.name}${path}`;
           break;
         case 'dynamic':
+          n++;
+          matchSegments.splice(0, 0, null);
           path = `/:${current.segment.name}${path}`;
+          params.push({
+            type: ':',
+            name: current.segment.name,
+            index: -n,
+          });
           break;
         case 'group':
           break;
@@ -73,6 +87,9 @@ function resolveParent(node: RouteTreeNode) {
       layouts.push(current.value.layout.component);
 
     current = current.parent;
+  }
+  for (const param of params) {
+    param.index += n;
   }
   if (path === '') path = '/';
 
@@ -87,7 +104,7 @@ function resolveParent(node: RouteTreeNode) {
         }
       : null;
 
-  return { ParentLayoutComponent, path };
+  return { ParentLayoutComponent, path, matchSegments, params };
 }
 
 function deleteItem<T>(array: T[], value: T) {
