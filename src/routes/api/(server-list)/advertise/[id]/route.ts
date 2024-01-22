@@ -2,7 +2,6 @@ import { APIEvent } from '@solidjs/start/server/types';
 import dayjs from 'dayjs';
 import { z, ZodError } from 'zod';
 
-import { db } from '~/server/database';
 import { advertisement } from '~/server/database/schema';
 
 const Params = z.object({
@@ -15,7 +14,7 @@ export async function PUT(event: APIEvent) {
 
     const validUntil = dayjs().add(1, 'minute');
 
-    await db
+    await event.context.db
       .insert(advertisement)
       .values({
         id: params.id,

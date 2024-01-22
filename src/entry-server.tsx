@@ -2,9 +2,7 @@ import { createHandler } from '@solidjs/start/entry';
 import { StartServer } from '@solidjs/start/server';
 
 import { transformApiRoutes } from '~/features/appdir-routes';
-import { migrate } from '~/server/database';
-
-migrate();
+import { createDatabase } from '~/server/database';
 
 export default createHandler(
   () => (
@@ -31,8 +29,12 @@ export default createHandler(
     />
   ),
   {
-    onRequest() {
+    onRequest(e) {
       transformApiRoutes();
+      const [db, migrate] = createDatabase(e);
+      migrate();
+
+      e.context.db = db;
     },
   },
 );
