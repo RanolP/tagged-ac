@@ -3,6 +3,7 @@ import dayjs from 'dayjs';
 import { z, ZodError } from 'zod';
 
 import { db } from '~/server/database';
+import { advertisement } from '~/server/database/schema';
 
 const Params = z.object({
   id: z.string().min(3),
@@ -15,14 +16,15 @@ export async function PUT(event: APIEvent) {
     const validUntil = dayjs().add(1, 'minute');
 
     await db
-      .insertInto('Advertisement')
+      .insert(advertisement)
       .values({
         id: params.id,
         valid_until: validUntil.toISOString(),
       })
-      .onConflict((oc) =>
-        oc.doUpdateSet({ valid_until: validUntil.toISOString() }),
-      )
+      .onConflictDoUpdate({
+        target: advertisement.id,
+        set: { valid_until: validUntil.toISOString() },
+      })
       .execute();
 
     return {

@@ -29,7 +29,5 @@ Thumbs.db
 # vinxi
 .vinxi
 
-# prisma + kysely
-src/server/database/types.ts
-src/server/database/migrator.ts
+# drizzle-orm
 .local.db

@@ -10,14 +10,7 @@ import eslintPluginSimpleImportSort from 'eslint-plugin-simple-import-sort';
 export default [
   { files: ['**/*.{ts,tsx}', 'eslint.config.js', 'lint-staged.config.mjs'] },
   {
-    ignores: [
-      '.vinxi',
-      'dist',
-      '.wrangler',
-      'src/server/database/types.ts',
-      'src/server/database/migrator.ts',
-      'src/server/database/migrations/*',
-    ],
+    ignores: ['.vinxi', 'dist', '.wrangler'],
   },
   { languageOptions: { parser: typescriptEslintParser } },
   {

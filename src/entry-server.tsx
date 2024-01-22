@@ -2,21 +2,9 @@ import { createHandler } from '@solidjs/start/entry';
 import { StartServer } from '@solidjs/start/server';
 
 import { transformApiRoutes } from '~/features/appdir-routes';
+import { migrate } from '~/server/database';
 
-import { migrator } from './server/database/migrator';
-
-migrator.migrateToLatest().then((e) => {
-  if (e.error) {
-    console.error(e.error);
-  }
-  if (e.results?.length) {
-    for (const result of e.results) {
-      console.log(
-        `[${result.direction}] ${result.migrationName} : ${result.status}`,
-      );
-    }
-  }
-});
+migrate();
 
 export default createHandler(
   () => (

@@ -1,14 +1,22 @@
-import SQLite from 'better-sqlite3';
-import { Kysely, SqliteDialect } from 'kysely';
-import { D1Dialect } from 'kysely-d1';
+import Database from 'better-sqlite3';
+import { drizzle as drizzleSqlite } from 'drizzle-orm/better-sqlite3';
+import { migrate as migrateSqlite } from 'drizzle-orm/better-sqlite3/migrator';
+import { drizzle as drizzleD1 } from 'drizzle-orm/d1';
+import { migrate as migrateD1 } from 'drizzle-orm/d1/migrator';
 
-import { DB } from './types';
+import * as schema from './schema';
 
-const dialect = import.meta.env?.PROD
-  ? new D1Dialect({ database: import.meta.env.DB })
-  : new SqliteDialect({
-      database: new SQLite('.local.db'),
-    });
-export const db = new Kysely<DB>({
-  dialect,
-});
+const MIGRATIONS_FOLDER = new URL('migrations', import.meta.url).pathname;
+
+export const [db, migrate] = import.meta.env.PROD
+  ? (() => {
+      const db = drizzleD1(import.meta.env.DB, { schema });
+      return [db, () => migrateD1(db, { migrationsFolder: MIGRATIONS_FOLDER })];
+    })()
+  : (() => {
+      const db = drizzleSqlite(new Database('.local.db'), { schema });
+      return [
+        db,
+        () => migrateSqlite(db, { migrationsFolder: MIGRATIONS_FOLDER }),
+      ];
+    })();
