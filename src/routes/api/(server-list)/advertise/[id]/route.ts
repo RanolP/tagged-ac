@@ -8,20 +8,22 @@ const Params = z.object({
   id: z.string().min(3),
 });
 
-export function PUT(event: APIEvent) {
+export async function PUT(event: APIEvent) {
   try {
     const params = Params.parse(event.params);
 
     const validUntil = dayjs().add(1, 'minute');
 
-    db.insertInto('Advertisement')
+    await db
+      .insertInto('Advertisement')
       .values({
         id: params.id,
         valid_until: validUntil.toISOString(),
       })
       .onConflict((oc) =>
         oc.doUpdateSet({ valid_until: validUntil.toISOString() }),
-      );
+      )
+      .execute();
 
     return {
       ok: true,

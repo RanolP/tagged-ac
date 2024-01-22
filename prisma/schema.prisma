@@ -12,5 +12,5 @@ generator kysely {
 
 datasource db {
     provider = "sqlite"
-    url      = "./local.db"
+    url      = "file:../.local.db"
 }

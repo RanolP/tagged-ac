@@ -31,4 +31,5 @@ Thumbs.db
 
 # prisma + kysely
 src/server/database/types.ts
-local.db
+src/server/database/migrator.ts
+.local.db

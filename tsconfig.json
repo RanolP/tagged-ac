@@ -13,8 +13,9 @@
     "skipLibCheck": true,
     "types": ["vinxi/client"],
     "isolatedModules": true,
+    "allowImportingTsExtensions": true,
     "paths": {
-      "~/*": ["./src/*"]
-    }
-  }
+      "~/*": ["./src/*"],
+    },
+  },
 }
