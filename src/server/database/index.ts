@@ -12,33 +12,19 @@ import * as schema from './schema';
 const MIGRATIONS_FOLDER = new URL('../../../migrations', import.meta.url)
   .pathname;
 
-let sqliteDbCache: [BetterSQLite3Database<typeof schema>, () => void] | null =
-  null;
+let sqliteDbCache: BetterSQLite3Database<typeof schema> | null = null;
 
 export function createDatabase(
   event: H3Event<EventHandlerRequest>,
-): [
-  DrizzleD1Database<typeof schema> | BetterSQLite3Database<typeof schema>,
-  () => Promise<void> | void,
-] {
+): DrizzleD1Database<typeof schema> | BetterSQLite3Database<typeof schema> {
   if (import.meta.env.PROD) {
     const db = drizzleD1(event.context.cloudflare.env.DB, { schema });
-    return [
-      db,
-      () => {
-        /* d1 migrations should be done by hand */
-      },
-    ];
+    return db;
   } else {
     if (sqliteDbCache) return sqliteDbCache;
     const db = drizzleSqlite(new Database('.local.db'), { schema });
-    sqliteDbCache = [
-      db,
-      () => {
-        migrateSqlite(db, { migrationsFolder: MIGRATIONS_FOLDER });
-        if (sqliteDbCache) sqliteDbCache[1] = () => {};
-      },
-    ];
+    migrateSqlite(db, { migrationsFolder: MIGRATIONS_FOLDER });
+    sqliteDbCache = db;
     return sqliteDbCache;
   }
 }
