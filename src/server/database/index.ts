@@ -34,7 +34,10 @@ export function createDatabase(
     const db = drizzleSqlite(new Database('.local.db'), { schema });
     sqliteDbCache = [
       db,
-      () => migrateSqlite(db, { migrationsFolder: MIGRATIONS_FOLDER }),
+      () => {
+        migrateSqlite(db, { migrationsFolder: MIGRATIONS_FOLDER });
+        if (sqliteDbCache) sqliteDbCache[1] = () => {};
+      },
     ];
     return sqliteDbCache;
   }
