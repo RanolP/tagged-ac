@@ -29,10 +29,10 @@ export default createHandler(
     />
   ),
   {
-    onRequest(e) {
+    async onRequest(e) {
       transformApiRoutes();
       const [db, migrate] = createDatabase(e);
-      migrate();
+      await migrate();
 
       e.context.db = db;
     },

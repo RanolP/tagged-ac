@@ -19,7 +19,7 @@ export function createDatabase(
   event: H3Event<EventHandlerRequest>,
 ): [
   DrizzleD1Database<typeof schema> | BetterSQLite3Database<typeof schema>,
-  () => void,
+  () => Promise<void> | void,
 ] {
   if (import.meta.env.PROD) {
     const db = drizzleD1(event.context.cloudflare.env.DB, { schema });
