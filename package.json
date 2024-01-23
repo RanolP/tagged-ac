@@ -8,7 +8,7 @@
     "check:lint": "eslint --cache .",
     "check:type": "tsc-silent -p tsconfig.json --suppress @solidjs/start",
     "prepare": "simple-git-hooks && pnpm run generate-migrator",
-    "generate-migrator": "echo 1 || tsx sripts/generate-migrator.ts"
+    "cloudflare:migrate": "pnpx wrangler d1 migrations apply tagged-ac"
   },
   "dependencies": {
     "@floating-ui/dom": "^1.5.4",
