@@ -15,6 +15,9 @@ patchedDependencies:
   '@unocss/eslint-plugin@0.58.3':
     hash: shsqkmp2c4cavevcmyxe3nadky
     path: patches/@unocss__eslint-plugin@0.58.3.patch
+  drizzle-orm@0.29.3:
+    hash: 4jt7c2grzwdoh26mdyru7mynwa
+    path: patches/drizzle-orm@0.29.3.patch
 
 dependencies:
   '@floating-ui/dom':
@@ -40,7 +43,7 @@ dependencies:
     version: 1.11.10
   drizzle-orm:
     specifier: ^0.29.3
-    version: 0.29.3(@libsql/client@0.4.0-pre.7)(@types/better-sqlite3@7.6.8)(better-sqlite3@9.3.0)(kysely@0.27.2)
+    version: 0.29.3(patch_hash=4jt7c2grzwdoh26mdyru7mynwa)(@libsql/client@0.4.0-pre.7)(@types/better-sqlite3@7.6.8)(better-sqlite3@9.3.0)(kysely@0.27.2)
   kysely-d1:
     specifier: ^0.3.0
     version: 0.3.0(kysely@0.27.2)
@@ -3351,7 +3354,7 @@ packages:
       - supports-color
     dev: true
 
-  /drizzle-orm@0.29.3(@libsql/client@0.4.0-pre.7)(@types/better-sqlite3@7.6.8)(better-sqlite3@9.3.0)(kysely@0.27.2):
+  /drizzle-orm@0.29.3(patch_hash=4jt7c2grzwdoh26mdyru7mynwa)(@libsql/client@0.4.0-pre.7)(@types/better-sqlite3@7.6.8)(better-sqlite3@9.3.0)(kysely@0.27.2):
     resolution: {integrity: sha512-uSE027csliGSGYD0pqtM+SAQATMREb3eSM/U8s6r+Y0RFwTKwftnwwSkqx3oS65UBgqDOM0gMTl5UGNpt6lW0A==}
     peerDependencies:
       '@aws-sdk/client-rds-data': '>=3'
@@ -3427,6 +3430,7 @@ packages:
       better-sqlite3: 9.3.0
       kysely: 0.27.2
     dev: false
+    patched: true
 
   /dts-buddy@0.2.5:
     resolution: {integrity: sha512-66HTWHyXS3JwgpRwcu88rsDyZfPUb0oPYmiNg5f4BgCAFTVorJXpygf339QyXOXX1PuqHpvB+qo7O+8Ni1vXUQ==}

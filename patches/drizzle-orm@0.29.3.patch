@@ -1,0 +1,15 @@
+diff --git a/sqlite-core/db.d.ts b/sqlite-core/db.d.ts
+index 3a9e241247b72f963d08805a2283fb1df30884b3..729369ef130bc8321789b0022a76d2976aea7581 100644
+--- a/sqlite-core/db.d.ts
++++ b/sqlite-core/db.d.ts
+@@ -129,7 +129,9 @@ export declare class BaseSQLiteDatabase<TResultKind extends 'sync' | 'async', TR
+      *   .from(cars);
+      * ```
+      */
+-    select(): SQLiteSelectBuilder<undefined, TResultKind, TRunResult>;
++    // Disable due to TypeScript bug, I can't find the issue number
++    // Simplified Repro: https://www.typescriptlang.org/play?#code/C4TwDgpgBAIgjAJQK4DsEQM5IDbCgXigG8pRIAuKAcniqgF8AoM6AZQEUAZAS2AmTSYceQiRaUqHHnzpNm4aABUATgEMUGAGYB7ZQFt2SCMpDosuADysI2CAGNg3bSgA0UAWeEA+AlGu2HJxQoADJ3VE9cRkYAE3tsVWVoOwSMDD8uXgh-e2AAISRubDjlKxtcoLcPIVwfIkYoRqgIAA97JD4ACgBKShV1LV0DIxNI4DKAx2cqiJrgL0Y5OJTE5NT0vNUMbMy+GFVgVQAjLYgLavN54gam7cmeyiksnIcCopKLVDjNbhQIGJmgkuXgA3DdGndchMKs4vJ1IYFnI9yoiUL0MtJsij8oVisZoajAWNQYtossEkkoHZnBg8BAUABzX4QeCUTbbJ57A7HU4WeAXbyxeKrKk0umM5mcbR2VTYVgAR2wWTZp05LO5J22Vl2-FmwLJwsp1I0eAAqqwAKIAfVZUCO2m0tnU0WNtKgMSOvnN1vgUAA-M0JX9fZR6Uy-lKZXLFVkwYxXXhtABrXwegB0COAPTTrXaXW6YITzWUylTRwz2M6RHo3RzbTsHQgPTBQA
++    // select(): SQLiteSelectBuilder<undefined, TResultKind, TRunResult>;
+     select<TSelection extends SelectedFields>(fields: TSelection): SQLiteSelectBuilder<TSelection, TResultKind, TRunResult>;
+     /**
+      * Adds `distinct` expression to the select query.

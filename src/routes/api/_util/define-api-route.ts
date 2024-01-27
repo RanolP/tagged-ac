@@ -1,6 +1,4 @@
-import { APIHandler } from '@solidjs/start/server/types';
-import { BetterSQLite3Database } from 'drizzle-orm/better-sqlite3';
-import { DrizzleD1Database } from 'drizzle-orm/d1';
+import { APIEvent, APIHandler } from '@solidjs/start/server/types';
 import { z } from 'zod';
 
 export function defineApiRoute<T extends Config>(
@@ -48,5 +46,5 @@ interface Config {
 
 type Request<T extends Config> = {
   params: T['params'] extends z.ZodType ? z.infer<T['params']> : undefined;
-  db: DrizzleD1Database | BetterSQLite3Database;
+  db: APIEvent['context']['db'];
 };

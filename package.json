@@ -60,7 +60,8 @@
   "pnpm": {
     "patchedDependencies": {
       "@unocss/eslint-plugin@0.58.3": "patches/@unocss__eslint-plugin@0.58.3.patch",
-      "@solidjs/start@0.4.10": "patches/@solidjs__start@0.4.10.patch"
+      "@solidjs/start@0.4.10": "patches/@solidjs__start@0.4.10.patch",
+      "drizzle-orm@0.29.3": "patches/drizzle-orm@0.29.3.patch"
     }
   }
 }
