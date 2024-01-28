@@ -1,0 +1,23 @@
+diff --git a/shared/index.tsx b/shared/index.tsx
+index 54223e56b48608fb4f94a44e64be1b8e9e4e6f17..dd59b9aec37134f63f0e1647d492f980eefce124 100644
+--- a/shared/index.tsx
++++ b/shared/index.tsx
+@@ -3,4 +3,5 @@ export { GET } from "./GET";
+ export { HttpHeader } from "./HttpHeader";
+ export { HttpStatusCode } from "./HttpStatusCode";
+ export { default as clientOnly } from "./clientOnly";
++export { apiRoutes } from './routes';
+ 
+diff --git a/shared/routes.ts b/shared/routes.ts
+index 4b8def9174fb6d77402548a5389987f861c5cc8c..7628ba6678ff530e2afebd150c78992fded2db7d 100644
+--- a/shared/routes.ts
++++ b/shared/routes.ts
+@@ -30,7 +30,7 @@ declare module "vinxi/routes" {
+ }
+ 
+ export const pageRoutes = defineRoutes((fileRoutes as unknown as Route[]).filter(o => o.type === "page"));
+-const apiRoutes = defineAPIRoutes((fileRoutes as unknown as Route[]).filter(o => o.type === "api"));
++export const apiRoutes = defineAPIRoutes((fileRoutes as unknown as Route[]).filter(o => o.type === "api"));
+ 
+ export function matchAPIRoute(path: string, method: HTTPMethod) {
+   const segments = path.replace(import.meta.env.SERVER_BASE_URL, "").split("/").filter(Boolean);

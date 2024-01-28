@@ -11,20 +11,20 @@
     "cloudflare:migrate": "pnpx wrangler d1 migrations apply tagged-ac"
   },
   "dependencies": {
-    "@floating-ui/dom": "^1.5.4",
-    "@libsql/client": "0.4.0-pre.7",
-    "@solidjs/router": "^0.10.9",
-    "@solidjs/start": "^0.4.10",
-    "@typescript-eslint/eslint-plugin": "^6.19.0",
-    "@unocss/reset": "^0.58.3",
+    "@floating-ui/dom": "^1.6.1",
+    "@libsql/client": "0.4.0",
+    "@solidjs/router": "^0.10.10",
+    "@solidjs/start": "^0.4.11",
+    "@typescript-eslint/eslint-plugin": "^6.19.1",
+    "@unocss/reset": "^0.58.4",
     "dayjs": "^1.11.10",
     "drizzle-orm": "^0.29.3",
     "kysely-d1": "^0.3.0",
     "kysely-migrate": "^0.0.16",
     "motion": "^10.17.0",
     "solid-floating-ui": "^0.3.1",
-    "solid-js": "^1.8.11",
-    "vinxi": "0.1.4",
+    "solid-js": "^1.8.12",
+    "vinxi": "0.1.6",
     "zod": "^3.22.4"
   },
   "engines": {
@@ -32,11 +32,11 @@
   },
   "devDependencies": {
     "@rollup/plugin-node-resolve": "^15.2.3",
-    "@types/better-sqlite3": "^7.6.8",
+    "@types/better-sqlite3": "^7.6.9",
     "@types/eslint": "^8.56.2",
     "@types/prompts": "^2.4.9",
-    "@typescript-eslint/parser": "^6.19.0",
-    "@unocss/eslint-config": "^0.58.3",
+    "@typescript-eslint/parser": "^6.19.1",
+    "@unocss/eslint-config": "^0.58.4",
     "better-sqlite3": "^9.3.0",
     "drizzle-kit": "^0.20.13",
     "eslint": "^8.56.0",
@@ -51,7 +51,7 @@
     "tsc-silent": "^1.2.2",
     "tsx": "^4.7.0",
     "typescript": "^5.3.3",
-    "unocss": "^0.58.3"
+    "unocss": "^0.58.4"
   },
   "resolutions": {
     "vite": "^5.0.11",
@@ -60,8 +60,8 @@
   "packageManager": "pnpm@8.14.3+sha256.2d0363bb6c314daa67087ef07743eea1ba2e2d360c835e8fec6b5575e4ed9484",
   "pnpm": {
     "patchedDependencies": {
-      "@unocss/eslint-plugin@0.58.3": "patches/@unocss__eslint-plugin@0.58.3.patch",
-      "@solidjs/start@0.4.10": "patches/@solidjs__start@0.4.10.patch",
+      "@unocss/eslint-plugin@0.58.4": "patches/@unocss__eslint-plugin@0.58.4.patch",
+      "@solidjs/start@0.4.11": "patches/@solidjs__start@0.4.11.patch",
       "drizzle-orm@0.29.3": "patches/drizzle-orm@0.29.3.patch"
     }
   }
