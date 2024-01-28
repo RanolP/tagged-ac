@@ -1,4 +1,5 @@
 import { flip, offset } from '@floating-ui/dom';
+import { timeline } from 'motion';
 import { useFloating } from 'solid-floating-ui';
 import { createMemo, createSignal, JSX } from 'solid-js';
 
@@ -17,8 +18,9 @@ export function CommandInput(props: Props) {
     setValue(e.currentTarget.value);
   };
 
-  const suggestionsFiltered = createMemo(() => {
-    const input = value().split(/ +/);
+  const commandInput = createMemo(() => value().split(/ +/));
+  const commandsMatched = createMemo(() => {
+    const input = commandInput();
     let commands = props.commands;
 
     for (let i = 0; i < input.length; i++) {
@@ -56,10 +58,60 @@ export function CommandInput(props: Props) {
 
       commands = filtered;
     }
-    return commands.flatMap((command) =>
+
+    return commands;
+  });
+
+  const suggestionsFiltered = createMemo(() => {
+    const input = commandInput();
+    return commandsMatched().flatMap((command) =>
       command.suggest(input.slice(command.name.length)),
     );
   });
+
+  const executeThrottle = { current: false };
+  const executeCommand: JSX.EventHandler<HTMLFormElement, SubmitEvent> = (
+    event,
+  ) => {
+    event.preventDefault();
+    if (executeThrottle.current) return;
+    const commandBestMatch = commandsMatched().at(0);
+    if (!commandBestMatch) {
+      executeThrottle.current = true;
+      Promise.all([
+        timeline(
+          [
+            [event.currentTarget, { transform: 'translate(0, 0)' }],
+            [event.currentTarget, { transform: 'translate(-8px, 12px)' }],
+            [event.currentTarget, { transform: 'translate(7px, -7px)' }],
+            [event.currentTarget, { transform: 'translate(-4px, 5px)' }],
+            [event.currentTarget, { transform: 'translate(3px, -6px)' }],
+            [event.currentTarget, { transform: 'translate(-2px, 4px)' }],
+            [event.currentTarget, { transform: 'translate(0, 0)' }],
+          ],
+          { duration: 0.4, persist: true },
+        ).finished,
+        timeline(
+          [
+            [event.currentTarget, { color: 'red' }, { at: '100%' }],
+            [
+              event.currentTarget,
+              { color: 'inherit' },
+              // See https://github.com/motiondivision/motionone/pull/244
+              { at: '100%', easing: 'step-end' as 'steps-end' },
+            ],
+          ],
+          { duration: 0.4, persist: true },
+        ).finished,
+      ]).then(() => {
+        executeThrottle.current = false;
+      });
+      return;
+    }
+    const args = commandInput().slice(commandBestMatch?.name.length);
+    setValue('');
+    const _result = commandBestMatch.execute(args);
+  };
 
   const [reference, setReference] = createSignal<HTMLDivElement>();
   const [floating, setFloating] = createSignal<HTMLDivElement>();
@@ -71,7 +123,15 @@ export function CommandInput(props: Props) {
 
   return (
     <div flex="~ col" relative w-full text-8>
-      <div ref={setReference} flex="~ row" h-14 w-full items-center px-2>
+      <form
+        ref={setReference}
+        flex="~ row"
+        h-14
+        w-full
+        items-center
+        px-2
+        onSubmit={executeCommand}
+      >
         <Icon name="command-prompt-box" my-2 mr-2 />
         <input
           h="[2em]"
@@ -83,7 +143,7 @@ export function CommandInput(props: Props) {
           py-2
           outline-none
         />
-      </div>
+      </form>
       <AutoCompletion
         ref={setFloating}
         suggestions={suggestionsFiltered()}
