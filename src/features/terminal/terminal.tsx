@@ -1,12 +1,19 @@
-import { createSignal, JSX } from 'solid-js';
+import { createRenderEffect, createSignal, JSX } from 'solid-js';
 
 interface Props {
   initialPrompt?: JSX.Element[];
   input: JSX.Element;
 }
 
+const [histories, setHistories] = createSignal<JSX.Element[]>([]);
+
 export function Terminal(props: Props) {
-  const [histories, _setHistories] = createSignal(props.initialPrompt);
+  createRenderEffect(() => {
+    setHistories((prev) =>
+      prev.length === 0 ? props.initialPrompt ?? [] : prev,
+    );
+  });
+
   return (
     <div
       mx-auto
