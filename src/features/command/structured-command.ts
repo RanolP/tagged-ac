@@ -2,8 +2,8 @@ import { Suggestion } from '../terminal/command-input/auto-completion';
 
 export interface StructuredCommand {
   name: string[];
-  execute(args: string[]): CommandError[];
-  suggest(args: string[]): Suggestion[];
+  execute(args: string[]): Promise<CommandError[]> | CommandError[];
+  suggest(args: string[]): Promise<Suggestion[]> | Suggestion[];
 }
 
 export interface CommandError {

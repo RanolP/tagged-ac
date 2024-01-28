@@ -1,12 +1,12 @@
 import { flip, offset } from '@floating-ui/dom';
 import { timeline } from 'motion';
 import { useFloating } from 'solid-floating-ui';
-import { createMemo, createSignal, JSX } from 'solid-js';
+import { createEffect, createMemo, createSignal, JSX } from 'solid-js';
 
 import { Icon } from '~/design-system/icon/icon';
 import { StructuredCommand } from '~/features/command/structured-command';
 
-import { AutoCompletion } from './auto-completion';
+import { AutoCompletion, Suggestion } from './auto-completion';
 
 interface Props {
   commands: StructuredCommand[];
@@ -62,23 +62,30 @@ export function CommandInput(props: Props) {
     return commands;
   });
 
-  const suggestionsFiltered = createMemo(() => {
+  // do not createResource due to https://github.com/solidjs/solid/issues/2047
+  const [suggestionsFiltered, setSuggestionsFiltered] = createSignal<
+    Suggestion[]
+  >([]);
+  createEffect(() => {
     const input = commandInput();
-    return commandsMatched().flatMap((command) =>
-      command.suggest(input.slice(command.name.length)),
-    );
+
+    Promise.all(
+      commandsMatched().map((command) =>
+        command.suggest(input.slice(command.name.length)),
+      ),
+    ).then((x) => setSuggestionsFiltered(x.flat()));
   });
 
-  const executeThrottle = { current: false };
-  const executeCommand: JSX.EventHandler<HTMLFormElement, SubmitEvent> = (
+  const [isExecuting, setExecuting] = createSignal(false);
+  const executeCommand: JSX.EventHandler<HTMLFormElement, SubmitEvent> = async (
     event,
   ) => {
     event.preventDefault();
-    if (executeThrottle.current) return;
+    if (isExecuting()) return;
+    setExecuting(true);
     const commandBestMatch = commandsMatched().at(0);
     if (!commandBestMatch) {
-      executeThrottle.current = true;
-      Promise.all([
+      await Promise.all([
         timeline(
           [
             [event.currentTarget, { transform: 'translate(0, 0)' }],
@@ -103,14 +110,15 @@ export function CommandInput(props: Props) {
           ],
           { duration: 0.4, persist: true },
         ).finished,
-      ]).then(() => {
-        executeThrottle.current = false;
-      });
+      ]);
+
+      setExecuting(false);
       return;
     }
     const args = commandInput().slice(commandBestMatch?.name.length);
     setValue('');
-    const _result = commandBestMatch.execute(args);
+    const _result = await commandBestMatch.execute(args);
+    setExecuting(false);
   };
 
   const [reference, setReference] = createSignal<HTMLDivElement>();
