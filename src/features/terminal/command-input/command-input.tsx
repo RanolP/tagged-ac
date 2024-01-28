@@ -100,7 +100,7 @@ export function CommandInput(props: Props) {
         ).finished,
         timeline(
           [
-            [event.currentTarget, { color: 'red' }, { at: '100%' }],
+            [event.currentTarget, { color: '#f41260' }, { at: '30%' }],
             [
               event.currentTarget,
               { color: 'inherit' },
