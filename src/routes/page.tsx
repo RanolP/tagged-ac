@@ -77,19 +77,21 @@ const MakeCommand = defineCommand(
 
 export default function IndexPage() {
   return (
-    <Terminal
-      initialPrompt={[
-        <img src="/logo.svg" w="[370px]" mb-4 />,
-        <p>
-          solved.ac 태그로 플레이하는 웹 게임 <br />
-          tagged.ac에 오신 것을 환영합니다!
-        </p>,
-      ]}
-      input={
-        <CommandInput
-          commands={[LsCommand, JoinCommand, MakeCommand]}
-        ></CommandInput>
-      }
-    />
+    <div>
+      <Terminal
+        initialPrompt={[
+          <img src="/logo.svg" w="[370px]" mb-4 />,
+          <p>
+            solved.ac 태그로 플레이하는 웹 게임 <br />
+            tagged.ac에 오신 것을 환영합니다!
+          </p>,
+        ]}
+        input={
+          <CommandInput
+            commands={[LsCommand, JoinCommand, MakeCommand]}
+          ></CommandInput>
+        }
+      />
+    </div>
   );
 }
