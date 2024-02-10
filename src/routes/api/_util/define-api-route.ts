@@ -1,43 +1,63 @@
 import { APIEvent, APIHandler } from '@solidjs/start/server/types';
 import { z } from 'zod';
 
-export function defineApiRoute<T extends Config>(
+import { ApiResponse, Result } from '../_dto/result';
+
+export function defineApiRoute<T extends Config, Res>(
   config: T,
-  handler: (request: Request<T>) => Promise<unknown> | unknown,
-): APIHandler {
-  return async (event) => {
-    try {
-      const params = config.params?.safeParse(event.params);
-      if (!params || params.success) {
-        return handler({
-          params: params?.data as any,
-          db: event.context.db,
-        });
-      } else {
+  apiHandler: (request: Request<T>) => ApiResponse<Res> | Result<Res>,
+  fetchHandler: (params: Params<T>) => Promise<Response>,
+): [APIHandler, (params: Params<T>) => ApiResponse<Res>] {
+  return [
+    async (event) => {
+      try {
+        const params = config.params?.safeParse(event.params);
+        if (!params || params.success) {
+          return apiHandler({
+            params: params?.data as any,
+            db: event.context.db,
+          });
+        } else {
+          return new Response(
+            JSON.stringify({
+              ok: false,
+              errors: {
+                params: params.error.flatten(),
+              },
+            } satisfies Result<unknown>),
+            {
+              status: 400,
+            },
+          );
+        }
+      } catch (e) {
         return new Response(
           JSON.stringify({
             ok: false,
             errors: {
-              params: params.error.flatten(),
+              generic: e instanceof Error ? e.message : 'Unknown Error',
             },
-          }),
+          } satisfies Result<unknown>),
           {
-            status: 400,
+            status: 500,
           },
         );
       }
-    } catch (e) {
-      return new Response(
-        JSON.stringify({
+    },
+    async (params) => {
+      const response = await fetchHandler(params);
+      try {
+        return response.json();
+      } catch {
+        return {
           ok: false,
-          errors: [e instanceof Error ? e.message : 'Unknown Error'],
-        }),
-        {
-          status: 500,
-        },
-      );
-    }
-  };
+          errors: {
+            fetch: `${response.status} ${response.statusText}`,
+          },
+        };
+      }
+    },
+  ];
 }
 
 interface Config {
@@ -45,6 +65,10 @@ interface Config {
 }
 
 type Request<T extends Config> = {
-  params: T['params'] extends z.ZodType ? z.infer<T['params']> : undefined;
+  params: Params<T>;
   db: APIEvent['context']['db'];
 };
+
+type Params<T extends Config> = T['params'] extends z.ZodType
+  ? z.infer<T['params']>
+  : void;

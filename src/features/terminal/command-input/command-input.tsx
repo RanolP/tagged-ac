@@ -1,12 +1,17 @@
 import { flip, offset } from '@floating-ui/dom';
-import { timeline } from 'motion';
+import { createAsync, useNavigate } from '@solidjs/router';
 import { useFloating } from 'solid-floating-ui';
 import { createEffect, createMemo, createSignal, JSX } from 'solid-js';
 
-import { Icon } from '~/design-system/icon/icon';
-import { StructuredCommand } from '~/features/command/structured-command';
+import { Icon } from '~/design-system/icon';
+import {
+  CommandError,
+  StructuredCommand,
+} from '~/features/command/structured-command';
 
+import { useEcho } from '..';
 import { AutoCompletion, Suggestion } from './auto-completion';
+import { animateFailShake } from './utils/animate-fail-shake';
 
 interface Props {
   commands: StructuredCommand[];
@@ -76,50 +81,39 @@ export function CommandInput(props: Props) {
     ).then((x) => setSuggestionsFiltered(x.flat()));
   });
 
+  const echo = useEcho();
+  const navigate = useNavigate();
+
   const [isExecuting, setExecuting] = createSignal(false);
   const executeCommand: JSX.EventHandler<HTMLFormElement, SubmitEvent> = async (
     event,
   ) => {
     event.preventDefault();
     if (isExecuting()) return;
-    setExecuting(true);
-    const commandBestMatch = commandsMatched().at(0);
-    if (!commandBestMatch) {
-      await Promise.all([
-        timeline(
-          [
-            [event.currentTarget, { transform: 'translate(0, 0)' }],
-            [event.currentTarget, { transform: 'translate(-8px, 12px)' }],
-            [event.currentTarget, { transform: 'translate(7px, -7px)' }],
-            [event.currentTarget, { transform: 'translate(-4px, 5px)' }],
-            [event.currentTarget, { transform: 'translate(3px, -6px)' }],
-            [event.currentTarget, { transform: 'translate(-2px, 4px)' }],
-            [event.currentTarget, { transform: 'translate(0, 0)' }],
-          ],
-          { duration: 0.4, persist: true },
-        ).finished,
-        timeline(
-          [
-            [event.currentTarget, { color: '#f41260' }, { at: '30%' }],
-            [
-              event.currentTarget,
-              { color: 'inherit' },
-              // See https://github.com/motiondivision/motionone/pull/244
-              { at: '100%', easing: 'step-end' as 'steps-end' },
-            ],
-          ],
-          { duration: 0.4, persist: true },
-        ).finished,
-      ]);
+    try {
+      setExecuting(true);
+      const commandBestMatch = commandsMatched().at(0);
+      if (!commandBestMatch) {
+        await animateFailShake(event.currentTarget);
+        return;
+      }
 
+      const args = commandInput().slice(commandBestMatch?.name.length);
+      const errors: CommandError[] = [];
+      await commandBestMatch.execute(
+        {
+          errors,
+          echo,
+          navigate,
+        },
+        args,
+      );
+      setValue('');
+    } finally {
       setExecuting(false);
-      return;
     }
-    const args = commandInput().slice(commandBestMatch?.name.length);
-    setValue('');
-    const _result = await commandBestMatch.execute(args);
-    setExecuting(false);
   };
+  createAsync;
 
   const [reference, setReference] = createSignal<HTMLDivElement>();
   const [floating, setFloating] = createSignal<HTMLDivElement>();

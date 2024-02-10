@@ -22,6 +22,7 @@
     "kysely-d1": "^0.3.0",
     "kysely-migrate": "^0.0.16",
     "motion": "^10.17.0",
+    "peerjs": "^1.5.2",
     "solid-floating-ui": "^0.3.1",
     "solid-js": "^1.8.12",
     "vinxi": "0.1.6",
@@ -49,7 +50,7 @@
     "prompts": "^2.4.2",
     "tsc-silent": "^1.2.2",
     "tsx": "^4.7.0",
-    "typescript": "^5.3.3",
+    "typescript": "5.4.0-beta",
     "unocss": "^0.58.4"
   },
   "resolutions": {

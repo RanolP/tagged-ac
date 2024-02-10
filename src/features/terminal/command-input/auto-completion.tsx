@@ -1,6 +1,6 @@
 import { JSX, splitProps } from 'solid-js';
 
-import { Icon, IconName } from '~/design-system/icon/icon';
+import { Icon, IconName } from '~/design-system/icon';
 
 export interface Suggestion {
   value: string;
@@ -16,6 +16,7 @@ export function AutoCompletion(props: Props) {
   const [local, others] = splitProps(props, ['suggestions']);
   return (
     <div
+      class={'[[data-state="inactive"]_&]:pointer-events-none'}
       flex="~ col"
       bg="#000 opacity-50"
       w="[calc(100%_-_3rem)]"

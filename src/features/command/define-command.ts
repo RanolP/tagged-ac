@@ -1,9 +1,15 @@
 import { Suggestion } from '../terminal/command-input/auto-completion';
-import { CommandError, StructuredCommand } from './structured-command';
+import {
+  CommandExecutionContext,
+  StructuredCommand,
+} from './structured-command';
 
 export function defineCommand(
   name: string,
-  execute: (args: string[]) => CommandError[],
+  execute: (
+    ctx: CommandExecutionContext,
+    args: string[],
+  ) => Promise<void> | void,
   suggest: (args: string[]) => Suggestion[],
 ): StructuredCommand {
   return {

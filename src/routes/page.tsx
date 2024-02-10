@@ -1,10 +1,28 @@
 import { defineCommand } from '~/features/command/define-command';
+import { myPeerId } from '~/features/game/communication/peer';
 import { CommandInput, Terminal } from '~/features/terminal';
+
+import { requestServerList } from './api/(server-list)/servers/route';
 
 const LsCommand = defineCommand(
   'ls',
-  () => {
-    return [];
+  async (ctx) => {
+    const res = await requestServerList();
+    const list = res.ok ? res.value : [];
+    ctx.echo(
+      <div>
+        <h3>서버 목록 ({list.length})</h3>
+        {list.length === 0 ? (
+          <div>- 아직 열린 서버가 없어요... </div>
+        ) : (
+          <ul>
+            {list.map(({ id }) => (
+              <li list-none>- {id}</li>
+            ))}
+          </ul>
+        )}
+      </div>,
+    );
   },
   () => {
     return [
@@ -18,9 +36,7 @@ const LsCommand = defineCommand(
 );
 const JoinCommand = defineCommand(
   'join',
-  () => {
-    return [];
-  },
+  () => {},
   (args) => {
     if (args.length === 0) {
       return [
@@ -43,8 +59,10 @@ const JoinCommand = defineCommand(
 );
 const MakeCommand = defineCommand(
   'make',
-  () => {
-    return [];
+  (ctx) => {
+    const id = myPeerId();
+    ctx.navigate(`/game/room/${id}`);
+    ctx.echo(<p>접속 ID : {id}</p>);
   },
   () => {
     return [
@@ -59,21 +77,19 @@ const MakeCommand = defineCommand(
 
 export default function IndexPage() {
   return (
-    <div>
-      <Terminal
-        initialPrompt={[
-          <img src="logo.svg" w="[370px]" mb-4 self-center />,
-          <span self-center text-center text-8>
-            solved.ac 태그로 플레이하는 웹 게임 <br />
-            tagged.ac에 오신 것을 환영합니다!
-          </span>,
-        ]}
-        input={
-          <CommandInput
-            commands={[LsCommand, JoinCommand, MakeCommand]}
-          ></CommandInput>
-        }
-      />
-    </div>
+    <Terminal
+      initialPrompt={[
+        <img src="/logo.svg" w="[370px]" mb-4 />,
+        <p>
+          solved.ac 태그로 플레이하는 웹 게임 <br />
+          tagged.ac에 오신 것을 환영합니다!
+        </p>,
+      ]}
+      input={
+        <CommandInput
+          commands={[LsCommand, JoinCommand, MakeCommand]}
+        ></CommandInput>
+      }
+    />
   );
 }

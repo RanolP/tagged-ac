@@ -1,16 +1,18 @@
 import dayjs from 'dayjs';
 import { z } from 'zod';
 
+import { Advertisement } from '~/routes/api/_dto/advertisement';
+import { ApiResponse } from '~/routes/api/_dto/result';
 import { defineApiRoute } from '~/routes/api/_util/define-api-route';
 import { advertisement } from '~/server/database/schema';
 
-export const PUT = defineApiRoute(
+export const [PUT, requestAdvertise] = defineApiRoute(
   {
     params: z.object({
-      id: z.string().min(3),
+      id: z.string().uuid(),
     }),
   },
-  async ({ params, db }) => {
+  async ({ params, db }): ApiResponse<Advertisement> => {
     const validUntil = dayjs().add(1, 'minute');
 
     await db
@@ -33,4 +35,5 @@ export const PUT = defineApiRoute(
       },
     };
   },
+  ({ id }) => fetch(`/api/advertise/${id}`, { method: 'PUT' }),
 );

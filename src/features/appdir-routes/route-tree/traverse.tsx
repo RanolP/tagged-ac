@@ -1,7 +1,7 @@
-import { RouteSectionProps } from '@solidjs/router';
-import { Component, lazy, ParentProps } from 'solid-js';
-
-import { Param } from '../solid-start-route-definition';
+import {
+  Param,
+  SolidStartRouteDefinition,
+} from '../solid-start-route-definition';
 import { RouteTreeNode } from './types';
 
 export function traverseRouteTree(node: RouteTreeNode) {
@@ -24,25 +24,14 @@ export function traverseRouteTree(node: RouteTreeNode) {
   } else if (node.value.page) {
     /** @todo: support error, loading, recursive layout */
     const { error: _0, loading: _1, page } = node.value;
-    const { ParentLayoutComponent, path } = resolveParent(node);
+    const { assignable } = resolveParent(node);
 
-    page.path = path;
-    const PageComponent = page.component;
-    if (PageComponent)
-      page.component = lazy(async () => {
-        return {
-          default: (props: RouteSectionProps) => {
-            let content = <PageComponent {...props} />;
-            if (ParentLayoutComponent)
-              content = (
-                <ParentLayoutComponent {...props}>
-                  {content}
-                </ParentLayoutComponent>
-              );
-            return content;
-          },
-        };
-      });
+    Object.assign(page, {
+      path: assignable.path,
+      $component: assignable.$component,
+      component: assignable.component,
+      children: assignable.children,
+    });
 
     deleteItem(node.originalDefinitionList, node.value.route);
   }
@@ -54,11 +43,11 @@ export function traverseRouteTree(node: RouteTreeNode) {
 }
 
 function resolveParent(node: RouteTreeNode) {
-  const layouts: Array<Component<RouteSectionProps>> = [];
   let path = '';
   const matchSegments: Array<string | null> = [];
   const params: Array<Param> = [];
 
+  let assignable: SolidStartRouteDefinition = undefined!;
   let current: RouteTreeNode | undefined = node;
   let n = 0;
   while (current) {
@@ -83,8 +72,23 @@ function resolveParent(node: RouteTreeNode) {
           break;
       }
 
-    if (current.value.layout?.component)
-      layouts.push(current.value.layout.component);
+    if (current.value.page)
+      assignable = Object.assign({}, current.value.page, {
+        path: '/',
+        children: undefined,
+      });
+    if (current.value.route)
+      assignable = Object.assign({}, current.value.route, {
+        path: '/',
+        children: undefined,
+      });
+    if (current.value.layout)
+      assignable = Object.assign({}, current.value.layout, {
+        path: '/',
+        children: [assignable],
+      });
+
+    if (!assignable) console.log(Object.keys(current.value));
 
     current = current.parent;
   }
@@ -93,18 +97,9 @@ function resolveParent(node: RouteTreeNode) {
   }
   if (path === '') path = '/';
 
-  const ParentLayoutComponent =
-    layouts.length > 0
-      ? ({ children, ...props }: ParentProps<RouteSectionProps>) => {
-          let content = children;
-          for (const Layout of layouts) {
-            content = <Layout {...props}>{content}</Layout>;
-          }
-          return content;
-        }
-      : null;
+  assignable.path = path;
 
-  return { ParentLayoutComponent, path, matchSegments, params };
+  return { assignable, matchSegments, params };
 }
 
 function deleteItem<T>(array: T[], value: T) {
