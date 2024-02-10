@@ -1,18 +1,21 @@
-'use client';
-
-import { createRenderEffect, JSX } from 'solid-js';
-
-import { useTerminalHistoryContext } from './history-context';
+import { createRenderEffect, createSignal, JSX } from 'solid-js';
 
 interface Props {
   initialPrompt?: JSX.Element[];
   input: JSX.Element;
 }
 
+const [histories, setHistories] = createSignal<JSX.Element[]>([]);
+
+export function useEcho() {
+  return (e: JSX.Element) => {
+    setHistories((prev) => [...prev, e]);
+  };
+}
+
 export function Terminal(props: Props) {
-  const [histories, setHistories] = useTerminalHistoryContext();
   createRenderEffect(() => {
-    setHistories?.((prev) =>
+    setHistories((prev) =>
       prev.length === 0 ? props.initialPrompt ?? [] : prev,
     );
   });
