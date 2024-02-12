@@ -1,0 +1,34 @@
+diff --git a/shared/index.tsx b/shared/index.tsx
+index 54223e56b48608fb4f94a44e64be1b8e9e4e6f17..61f3600d9eefc09ee3bd402dca2f68aa7d382a7d 100644
+--- a/shared/index.tsx
++++ b/shared/index.tsx
+@@ -3,4 +3,4 @@ export { GET } from "./GET";
+ export { HttpHeader } from "./HttpHeader";
+ export { HttpStatusCode } from "./HttpStatusCode";
+ export { default as clientOnly } from "./clientOnly";
+-
++export { reloadApiRoutes } from "./routes";
+diff --git a/shared/routes.ts b/shared/routes.ts
+index e6068d8f39765db239654b9cb114998130931976..11c67a1067553593a2111295594b11615a08a5ab 100644
+--- a/shared/routes.ts
++++ b/shared/routes.ts
+@@ -64,7 +64,8 @@ function containsHTTP(route: Route) {
+   return route["$GET"] || route["$POST"] || route["$PUT"] || route["$PATCH"] || route["$DELETE"];
+ }
+ 
+-const router = createRouter({
++
++const loadRouter = () => createRouter({
+   routes: (fileRoutes as unknown as Route[]).reduce((memo, route) => {
+     if (!containsHTTP(route)) return memo;
+     let path = route.path.replace(/\(.*\)\/?/g, "").replace(/\*([^/]*)/g, (_, m) => `**:${m}`);
+@@ -80,3 +81,9 @@ const router = createRouter({
+     return memo;
+   }, {} as Record<string, { route: Route }>)
+ });
++
++export const reloadApiRoutes = () => {
++  router = loadRouter();
++};
++
++let router = loadRouter();

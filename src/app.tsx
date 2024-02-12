@@ -1,3 +1,4 @@
+// @refresh reload
 import { Router } from '@solidjs/router';
 import { Suspense } from 'solid-js';
 

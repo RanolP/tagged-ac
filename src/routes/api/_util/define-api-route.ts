@@ -1,5 +1,7 @@
-import { APIEvent, APIHandler } from '@solidjs/start/server/types';
+import { APIHandler } from '@solidjs/start/server/types';
 import { z } from 'zod';
+
+import { DrizzleDatabase } from '~/server/database';
 
 import { ApiResponse, Result } from '../_dto/result';
 
@@ -15,7 +17,7 @@ export function defineApiRoute<T extends Config, Res>(
         if (!params || params.success) {
           return apiHandler({
             params: params?.data as any,
-            db: event.context.db,
+            db: event.locals.db,
           });
         } else {
           return new Response(
@@ -66,7 +68,7 @@ interface Config {
 
 type Request<T extends Config> = {
   params: Params<T>;
-  db: APIEvent['context']['db'];
+  db: DrizzleDatabase;
 };
 
 type Params<T extends Config> = T['params'] extends z.ZodType

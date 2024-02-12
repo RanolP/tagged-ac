@@ -1,6 +1,6 @@
-import { BetterSQLite3Database } from 'drizzle-orm/better-sqlite3';
-import { DrizzleD1Database } from 'drizzle-orm/d1';
 import type { AttributifyAttributes } from 'unocss/preset-attributify';
+
+import { DrizzleDatabase } from './server/database';
 
 declare module 'solid-js' {
   export namespace JSX {
@@ -11,13 +11,8 @@ declare module 'solid-js' {
   }
 }
 
-declare module 'vinxi/server' {
-  export interface H3EventContext {
-    cloudflare: {
-      env: {
-        DB: string;
-      };
-    };
-    db: DrizzleD1Database<typeof schema> | BetterSQLite3Database<typeof schema>;
+declare module 'solidjs/start/server' {
+  export interface RequestEventLocals {
+    db: DrizzleDatabase;
   }
 }

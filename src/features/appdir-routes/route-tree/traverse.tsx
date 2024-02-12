@@ -29,9 +29,10 @@ export function traverseRouteTree(
   }
 
   if (node.value.route) {
-    const { matchSegments, params } = appendSegment(segments, node).route;
-    node.value.route.matchSegments = matchSegments;
-    node.value.route.params = params;
+    const { route, page } = appendSegment(segments, node);
+    node.value.route.matchSegments = route.matchSegments;
+    node.value.route.params = route.params;
+    node.value.route.path = page.path;
 
     const parentSegments = appendSegment(segments, node);
     for (const child of Object.values(node.children)) {

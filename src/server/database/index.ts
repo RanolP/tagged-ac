@@ -16,7 +16,7 @@ let sqliteDbCache: BetterSQLite3Database<typeof schema> | null = null;
 
 export function createDatabase(
   event: H3Event<EventHandlerRequest>,
-): DrizzleD1Database<typeof schema> | BetterSQLite3Database<typeof schema> {
+): DrizzleDatabase {
   if (import.meta.env.PROD) {
     const db = drizzleD1(event.context.cloudflare.env.DB, { schema });
     return db;
@@ -28,3 +28,7 @@ export function createDatabase(
     return sqliteDbCache;
   }
 }
+
+export type DrizzleDatabase =
+  | DrizzleD1Database<typeof schema>
+  | BetterSQLite3Database<typeof schema>;
