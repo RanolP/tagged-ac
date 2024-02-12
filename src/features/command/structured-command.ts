@@ -1,6 +1,7 @@
 import { Navigator } from '@solidjs/router';
 import { JSX } from 'solid-js';
 
+import { PeerInstance } from '../game/communication/peer';
 import { Suggestion } from '../terminal/command-input/auto-completion';
 
 export interface StructuredCommand {
@@ -12,6 +13,7 @@ export interface StructuredCommand {
 export interface CommandExecutionContext {
   errors: CommandError[];
 
+  peer: PeerInstance;
   echo: (e: JSX.Element) => void;
   navigate: Navigator;
 }

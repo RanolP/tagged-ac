@@ -1,7 +1,6 @@
 import { For } from 'solid-js';
 
 import { defineCommand } from '~/features/command/define-command';
-import { join, myPeerId } from '~/features/game/communication/peer';
 import { CommandInput, Terminal } from '~/features/terminal';
 
 import { requestServerList } from './api/(server-list)/servers/route';
@@ -37,7 +36,7 @@ const LsCommand = defineCommand(
 const JoinCommand = defineCommand(
   'join',
   async (ctx, [id]) => {
-    await join(id);
+    await ctx.peer.join(id);
     ctx.navigate(`/game/room/${id}`);
   },
   (args) => {
@@ -63,7 +62,7 @@ const JoinCommand = defineCommand(
 const MakeCommand = defineCommand(
   'make',
   (ctx) => {
-    const id = myPeerId();
+    const id = ctx.peer.myId();
     ctx.navigate(`/game/room/${id}`);
     ctx.echo(<p>접속 ID : {id}</p>);
   },

@@ -8,6 +8,7 @@ import {
   CommandError,
   StructuredCommand,
 } from '~/features/command/structured-command';
+import { usePeerInstance } from '~/features/game/communication/peer';
 
 import { useEcho } from '..';
 import { AutoCompletion, Suggestion } from './auto-completion';
@@ -81,6 +82,7 @@ export function CommandInput(props: Props) {
     ).then((x) => setSuggestionsFiltered(x.flat()));
   });
 
+  const peer = usePeerInstance();
   const echo = useEcho();
   const navigate = useNavigate();
 
@@ -103,6 +105,8 @@ export function CommandInput(props: Props) {
       await commandBestMatch.execute(
         {
           errors,
+
+          peer,
           echo,
           navigate,
         },
