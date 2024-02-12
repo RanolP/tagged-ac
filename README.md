@@ -9,7 +9,7 @@
 - [UnoCSS](https://unocss.dev/)
 - [TypeScript](https://typescriptlang.org/)
 - [Cloudflare Pages](https://pages.cloudflare.com/)
-- [Prisma](https://www.prisma.io/) with [Kysely](https://kysely.dev/)
+- [Drizzle ORM](https://orm.drizzle.team/)
 
 ## Design Inspirations
 
