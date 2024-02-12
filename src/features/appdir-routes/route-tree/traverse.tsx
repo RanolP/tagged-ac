@@ -32,6 +32,7 @@ export function traverseRouteTree(node: RouteTreeNode) {
       component: assignable.component,
       children: assignable.children,
     });
+    console.log(assignable.path);
 
     deleteItem(node.originalDefinitionList, node.value.route);
   }
@@ -96,6 +97,8 @@ function resolveParent(node: RouteTreeNode) {
     param.index += n;
   }
   if (path === '') path = '/';
+
+  assignable.path = path;
 
   return { assignable, matchSegments, params };
 }
