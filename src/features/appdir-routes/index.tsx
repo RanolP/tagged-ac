@@ -22,5 +22,4 @@ export function transformApiRoutes() {
   >[];
   const tree = parseRouteTree(definitionList);
   traverseRouteTree(definitionList, tree, RootSegemnts);
-  console.log(JSON.stringify(definitionList, null, 2));
 }
