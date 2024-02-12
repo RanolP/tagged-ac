@@ -1,5 +1,5 @@
 import { RouteSectionProps } from '@solidjs/router';
-import { Component, lazy, ParentProps } from 'solid-js';
+import { Component, lazy, ParentProps, splitProps } from 'solid-js';
 
 import { Param } from '../solid-start-route-definition';
 import { RouteTreeNode } from './types';
@@ -95,10 +95,11 @@ function resolveParent(node: RouteTreeNode) {
 
   const ParentLayoutComponent =
     layouts.length > 0
-      ? ({ children, ...props }: ParentProps<RouteSectionProps>) => {
-          let content = children;
+      ? (_props: ParentProps<RouteSectionProps>) => {
+          const [local, others] = splitProps(_props, ['children']);
+          let content = local.children;
           for (const Layout of layouts) {
-            content = <Layout {...props}>{content}</Layout>;
+            content = <Layout {...others}>{content}</Layout>;
           }
           return content;
         }

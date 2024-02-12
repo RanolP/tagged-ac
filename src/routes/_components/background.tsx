@@ -1,13 +1,17 @@
+import { mergeProps } from 'solid-js';
+
 interface Props {
   url?: string;
 }
 
-export function Background({
-  url = 'https://source.unsplash.com/random/1920×1080/?starry,mountain',
-}: Props) {
+export function Background(_props: Props) {
+  const props = mergeProps(
+    { url: 'https://source.unsplash.com/random/1920×1080/?starry,mountain' },
+    _props,
+  );
   return (
     <img
-      src={url}
+      src={props.url}
       h="100%"
       w="100%"
       l-0

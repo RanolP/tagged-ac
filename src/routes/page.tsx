@@ -1,3 +1,5 @@
+import { For } from 'solid-js';
+
 import { defineCommand } from '~/features/command/define-command';
 import { myPeerId } from '~/features/game/communication/peer';
 import { CommandInput, Terminal } from '~/features/terminal';
@@ -16,9 +18,7 @@ const LsCommand = defineCommand(
           <div>- 아직 열린 서버가 없어요... </div>
         ) : (
           <ul>
-            {list.map(({ id }) => (
-              <li list-none>- {id}</li>
-            ))}
+            <For each={list}>{({ id }) => <li list-none>- {id}</li>}</For>
           </ul>
         )}
       </div>,
@@ -87,9 +87,7 @@ export default function IndexPage() {
           </p>,
         ]}
         input={
-          <CommandInput
-            commands={[LsCommand, JoinCommand, MakeCommand]}
-          ></CommandInput>
+          <CommandInput commands={[LsCommand, JoinCommand, MakeCommand]} />
         }
       />
     </div>

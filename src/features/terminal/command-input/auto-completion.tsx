@@ -1,4 +1,4 @@
-import { JSX, splitProps } from 'solid-js';
+import { For, JSX, splitProps } from 'solid-js';
 
 import { Icon, IconName } from '~/design-system/icon';
 
@@ -24,19 +24,21 @@ export function AutoCompletion(props: Props) {
       backdrop-blur-lg
       {...others}
     >
-      {local.suggestions.map(({ value, icon, description }) => (
-        <div grid="~ areas-[auto_auto]" w-full px-2 py-2>
-          <span flex="~ row">
-            <Icon name={icon ?? 'null'} mr-1 />
-            <span>{value}</span>
-          </span>
-          {description && (
-            <span justify-self-end pr-2>
-              {description}
+      <For each={local.suggestions}>
+        {({ value, icon, description }) => (
+          <div grid="~ areas-[auto_auto]" w-full px-2 py-2>
+            <span flex="~ row">
+              <Icon name={icon ?? 'null'} mr-1 />
+              <span>{value}</span>
             </span>
-          )}
-        </div>
-      ))}
+            {description && (
+              <span justify-self-end pr-2>
+                {description}
+              </span>
+            )}
+          </div>
+        )}
+      </For>
     </div>
   );
 }

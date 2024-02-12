@@ -3,6 +3,7 @@ import typescriptEslintParser from '@typescript-eslint/parser';
 import unocss from '@unocss/eslint-plugin';
 import eslintPluginPrettierRecommended from 'eslint-plugin-prettier/recommended';
 import eslintPluginSimpleImportSort from 'eslint-plugin-simple-import-sort';
+import eslintPluginSolidRecommended from 'eslint-plugin-solid/configs/recommended.js';
 
 /**
  * @type {import('eslint').Linter.FlatConfig[]}
@@ -13,6 +14,7 @@ export default [
     ignores: ['.vinxi', 'dist', '.wrangler'],
   },
   { languageOptions: { parser: typescriptEslintParser } },
+  eslintPluginSolidRecommended,
   {
     plugins: { unocss },
     rules: {
