@@ -11,10 +11,12 @@ const Peer: typeof PeerJS.Peer =
   (PeerJS.default as any).default ?? PeerJS.default;
 
 const [myPeerId, setMyPeerId] = createSignal<string>();
+const [connection, setConnection] = createSignal<
+  [string, DataConnection] | [null, null]
+>([null, null]);
 
 let isHosting = false;
 
-let conn: DataConnection | undefined;
 const peer = new Peer();
 peer.on('open', (id) => setMyPeerId(id));
 peer.on('connection', (conn) => {
@@ -24,31 +26,42 @@ peer.on('connection', (conn) => {
   }
 });
 
-function join(id: string) {
+function join(id: string): Promise<void> {
+  const [currentConnectionId] = connection();
+  if (currentConnectionId === id) return Promise.resolve();
+
+  const { promise, resolve, reject } = Promise.withResolvers<void>();
   leave();
 
-  conn = peer.connect(id, {});
+  const conn = peer.connect(id, {});
+  conn.on('open', () => {
+    setConnection([id, conn]);
+    resolve();
+  });
+  conn.on('error', (e) => reject(e));
+
+  return promise;
 }
 
 // @TODO: Graceful Shutdown
 function leave() {
+  const [, conn] = connection();
   if (!conn) return;
 
   conn.close();
-  conn = undefined;
+  setConnection([null, null]);
 }
 
 function startHost() {
-  if (!conn) return;
   isHosting = true;
   const { stream, listener, done } = createEventYielder<DataConnection>();
   peer.on('connection', listener);
-  const { promise, resolve: stopHosting } = Promise.withResolvers();
+  const { promise, resolve: stopHosting } = Promise.withResolvers<void>();
   promise.then(() => {
     isHosting = false;
     done();
   });
-  return [stream, stopHosting];
+  return { stream, stopHosting };
 }
 
 export { join, leave, myPeerId, startHost };

@@ -1,15 +1,15 @@
-import { RouteSectionProps } from '@solidjs/router';
+import { RouteSectionProps, useNavigate } from '@solidjs/router';
 import dayjs from 'dayjs';
-import { createEffect } from 'solid-js';
+import { createEffect, createMemo } from 'solid-js';
 
-import { myPeerId } from '~/features/game/communication/peer';
-import { CommandInput, Terminal } from '~/features/terminal';
+import { join, myPeerId, startHost } from '~/features/game/communication/peer';
+import { CommandInput, Terminal, useEcho } from '~/features/terminal';
 import { requestAdvertise } from '~/routes/api/(server-list)/advertise/[id]/route';
 
 export default function RoomPage(props: RouteSectionProps) {
+  const isHost = createMemo(() => myPeerId() === props.params.id);
   createEffect(() => {
-    const shouldAdvertise = myPeerId() === props.params.id;
-    if (!shouldAdvertise) return;
+    if (!isHost()) return;
 
     const refresh = () => {
       const peerId = myPeerId();
@@ -33,6 +33,27 @@ export default function RoomPage(props: RouteSectionProps) {
       if (timeoutRef.current) clearTimeout(timeoutRef.current);
     };
   });
+
+  const navigate = useNavigate();
+  createEffect(() => {
+    if (isHost()) return;
+
+    join(props.params.id).catch(() => navigate('/'));
+  });
+
+  const echo = useEcho();
+  createEffect(() => {
+    if (!isHost()) return;
+    const { stream, stopHosting } = startHost();
+    (async () => {
+      for await (const _conn of stream) {
+        echo(<p>새로운 커넥션 접근 확인!</p>);
+      }
+    })();
+
+    return () => stopHosting();
+  });
+
   return (
     <>
       <Terminal input={<CommandInput commands={[]} />} />
