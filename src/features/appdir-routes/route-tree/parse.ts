@@ -7,7 +7,8 @@ export function parseRouteTree(
   definitionList: SolidStartRouteDefinition[],
 ): RouteTreeNode {
   const root: RouteTreeNode = {
-    originalDefinitionList: definitionList,
+    isRoot: true,
+    hasParent: false,
     segment: { type: 'static', name: '' },
     value: {},
     children: {},
@@ -31,8 +32,7 @@ export function parseRouteTree(
         targetNode = targetNode.children[rawSegment];
       } else {
         const newChild: RouteTreeNode = {
-          originalDefinitionList: definitionList,
-          parent: targetNode,
+          hasParent: targetNode !== root,
           segment,
           value: {},
           children: {},

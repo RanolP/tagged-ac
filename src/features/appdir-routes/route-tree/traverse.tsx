@@ -4,103 +4,138 @@ import {
 } from '../solid-start-route-definition';
 import { RouteTreeNode } from './types';
 
-export function traverseRouteTree(node: RouteTreeNode) {
-  for (const child of Object.values(node.children)) {
-    traverseRouteTree(child);
-  }
+export function traverseRouteTree(
+  originalDefinitionList: SolidStartRouteDefinition[],
+  node: RouteTreeNode,
+  segments: Segments,
+): SolidStartRouteDefinition[] {
+  const resultingDefinition: SolidStartRouteDefinition[] = [];
 
   if (node.value['not-found']) {
-    if (node.parent)
-      deleteItem(node.originalDefinitionList, node.value['not-found']);
+    if (node.hasParent)
+      deleteItem(originalDefinitionList, node.value['not-found']);
     /** @todo */
     console.error('TODO: Implement /not-found.js');
-    deleteItem(node.originalDefinitionList, node.value['not-found']);
+    deleteItem(originalDefinitionList, node.value['not-found']);
+  }
+
+  if (node.value.layout) {
+    const layoutSegments = appendSegment(segments, node);
+    const children = Object.values(node.children).flatMap((child) =>
+      traverseRouteTree(originalDefinitionList, child, layoutSegments),
+    );
+    node.value.layout.path = layoutSegments.page.path;
+    node.value.layout.children = children;
   }
 
   if (node.value.route) {
-    const { matchSegments, params } = resolveParent(node);
+    const { matchSegments, params } = appendSegment(segments, node).route;
     node.value.route.matchSegments = matchSegments;
     node.value.route.params = params;
+    console.log({ matchSegments, params });
+
+    const parentSegments = appendSegment(segments, node);
+    for (const child of Object.values(node.children)) {
+      resultingDefinition.push(
+        ...traverseRouteTree(originalDefinitionList, child, parentSegments),
+      );
+    }
   } else if (node.value.page) {
     /** @todo: support error, loading, recursive layout */
-    const { error: _0, loading: _1, page } = node.value;
-    const { assignable } = resolveParent(node);
+    const { error: _0, loading: _1 } = node.value;
 
-    Object.assign(page, {
-      path: assignable.path,
-      $component: assignable.$component,
-      component: assignable.component,
-      children: assignable.children,
-    });
-    console.log(assignable.path);
+    const { page } = appendSegment(segments, node);
+    node.value.page.path = page.path;
 
-    deleteItem(node.originalDefinitionList, node.value.route);
+    deleteItem(originalDefinitionList, node.value.route);
+
+    if (page.hasParentLayout) {
+      deleteItem(originalDefinitionList, node.value.page);
+      if (node.value.layout)
+        node.value.layout.children = [
+          ...[node.value.layout.children ?? []].flat(),
+          node.value.page,
+        ];
+      else resultingDefinition.push(node.value.page);
+    }
+  } else {
+    const parentSegments = appendSegment(segments, node);
+    for (const child of Object.values(node.children)) {
+      resultingDefinition.push(
+        ...traverseRouteTree(originalDefinitionList, child, parentSegments),
+      );
+    }
   }
 
-  deleteItem(node.originalDefinitionList, node.value.error);
-  deleteItem(node.originalDefinitionList, node.value.loading);
-  deleteItem(node.originalDefinitionList, node.value.layout);
-  deleteItem(node.originalDefinitionList, node.value['not-found']);
+  deleteItem(originalDefinitionList, node.value.error);
+  deleteItem(originalDefinitionList, node.value.loading);
+  deleteItem(originalDefinitionList, node.value['not-found']);
+
+  return resultingDefinition;
 }
 
-function resolveParent(node: RouteTreeNode) {
-  let path = '';
-  const matchSegments: Array<string | null> = [];
-  const params: Array<Param> = [];
+interface Segments {
+  route: { matchSegments: Array<string | null>; params: Param[] };
+  page: { path: string; hasParentLayout: boolean };
+}
 
-  let assignable: SolidStartRouteDefinition = undefined!;
-  let current: RouteTreeNode | undefined = node;
-  let n = 0;
-  while (current) {
-    if (current.parent)
-      switch (current.segment.type) {
-        case 'static':
-          n++;
-          matchSegments.splice(0, 0, current.segment.name);
-          path = `/${current.segment.name}${path}`;
-          break;
-        case 'dynamic':
-          n++;
-          matchSegments.splice(0, 0, null);
-          path = `/:${current.segment.name}${path}`;
-          params.push({
-            type: ':',
-            name: current.segment.name,
-            index: -n,
-          });
-          break;
-        case 'group':
-          break;
-      }
+export const RootSegemnts: Segments = {
+  route: {
+    matchSegments: [],
+    params: [],
+  },
+  page: {
+    path: '',
+    hasParentLayout: false,
+  },
+};
 
-    if (current.value.page)
-      assignable = Object.assign({}, current.value.page, {
-        path: '/',
-        children: undefined,
-      });
-    if (current.value.route)
-      assignable = Object.assign({}, current.value.route, {
-        path: '/',
-        children: undefined,
-      });
-    if (current.value.layout)
-      assignable = Object.assign({}, current.value.layout, {
-        path: '/',
-        children: [assignable],
-      });
-
-    if (!assignable) console.log(Object.keys(current.value));
-
-    current = current.parent;
+function appendSegment(segments: Segments, node: RouteTreeNode): Segments {
+  let {
+    route: { matchSegments, params },
+    page: { path, hasParentLayout },
+  } = segments;
+  if (node.value.layout) {
+    path = '';
+    hasParentLayout = true;
   }
-  for (const param of params) {
-    param.index += n;
+
+  if (path.at(-1) === '/') path = path.slice(0, -1);
+
+  switch (node.segment.type) {
+    case 'static':
+      return {
+        route: {
+          matchSegments: node.isRoot
+            ? matchSegments
+            : [...matchSegments, node.segment.name],
+          params,
+        },
+        page: {
+          path: node.isRoot ? path : `${path}/${node.segment.name}`,
+          hasParentLayout,
+        },
+      };
+    case 'dynamic':
+      return {
+        route: {
+          matchSegments: [...matchSegments, null],
+          params: [
+            ...params,
+            { type: ':', name: node.segment.name, index: matchSegments.length },
+          ],
+        },
+        page: {
+          path: `${path}/:${node.segment.name}`,
+          hasParentLayout,
+        },
+      };
+    case 'group':
+      return {
+        route: { matchSegments, params },
+        page: { path, hasParentLayout },
+      };
   }
-  if (path === '') path = '/';
-
-  assignable.path = path;
-
-  return { assignable, matchSegments, params };
 }
 
 function deleteItem<T>(array: T[], value: T) {
